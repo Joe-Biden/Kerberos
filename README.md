@@ -20,4 +20,4 @@ TBA
 Disclaimer
 ---
 
-Any scripts contained within this collection are released with the MIT License. &break;Said License is included for your convienence, see LICENSE.
+Any scripts contained within this collection are released with the MIT License. <br />Said License is included for your convienence, see LICENSE.
