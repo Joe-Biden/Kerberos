@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+##----------------------------------------------------------------------------------------
+##-- author   Joe Biden aka ygoreus                                                    --
+##-- version  0.1                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=sh syn=sh :                                         --
+##----------------------------------------------------------------------------------------
+
+## initialize variables
+lckimg=${2:-1}
+
+## lock the screen
+lock() { /usr/bin/i3lock -i ${HOME}/media/wallpaper_archive/locker/${lckimg}.png }
+
+## do the stuff
+case ${1} in
+    "e"|"exit") /usr/bin/i3-msg 'exit' ;;
+    "s"|"suspend") lock && /usr/bin/systemctl suspend ;;
+    "h"|"hibernate") lock && /usr/bin/systemctl hibernate ;;
+    "r"|"restart"|"reboot") /usr/bin/systemctl reboot ;;
+    "p"|"poweroff"|"halt"|"shutdown") /usr/bin/systemctl poweroff ;;
+    "l"|"lock"|*) lock ;;
+esac

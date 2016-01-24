@@ -1,0 +1,362 @@
+#!/usr/bin/env bash
+##----------------------------------------------------------------------------------------
+##-- author   Joe Biden aka ygoreus                                                    --
+##-- version  0.1                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=sh syn=sh :                                         --
+##----------------------------------------------------------------------------------------
+##-- Change the theme(s) of the i3 window manager, uses zenity for gui option
+
+## usage
+usage() {
+    cat <<EOF
+    Usage: $0
+        -h      -- print help screen.
+
+    This is an interactive GUI theme switcher no options required.
+
+
+EOF
+    exit
+}
+
+## initialize variables
+configfile="${HOME}/.i3/config"
+tag0=$(i3-msg -t get_workspaces | jshon -a -e name -u | grep "1:" )
+tag1=$(i3-msg -t get_workspaces | jshon -a -e name -u | grep "2:" )
+tag2=$(i3-msg -t get_workspaces | jshon -a -e name -u | grep "3:" )
+tag3=$(i3-msg -t get_workspaces | jshon -a -e name -u | grep "4:" )
+tag4=$(i3-msg -t get_workspaces | jshon -a -e name -u | grep "5:" )
+tag5=$(i3-msg -t get_workspaces | jshon -a -e name -u | grep "6:" )
+tag6=$(i3-msg -t get_workspaces | jshon -a -e name -u | grep "7:" )
+tag7=$(i3-msg -t get_workspaces | jshon -a -e name -u | grep "8:" )
+tag8=$(i3-msg -t get_workspaces | jshon -a -e name -u | grep "9:" )
+tag9=$(i3-msg -t get_workspaces | jshon -a -e name -u | grep "10:" )
+WORKSPACE_DEFAULT=0
+WORKSPACE_YGR=0
+WORKSPACE_LB=0
+WINDOW_DEFAULT=0
+WINDOW_YGR=0
+WINDOW_SOLARIZED=0
+STATUSBAR_DEFAULT=0
+STATUSBAR_YGR=0
+STATUSBAR_SOLARIZED=0
+
+
+## Menu's
+MainMenu() {
+    MM=$(zenity --list --checklist --height "255" --text "<b>Select</b> which theme's you want to change:" --hide-header --column "Pick" --column "Item" FALSE "Workspace Buttons" FALSE "Window Theme" FALSE "Statusbar Theme")
+    [[ $MM =~ "Workspace Buttons" ]] && WkspMenu
+    [[ $MM =~ "Window Theme"      ]] && WindowMenu
+    [[ $MM =~ "Statusbar Theme"   ]] && StatusMenu
+}
+
+WkspMenu() {
+    WM=$(zenity --list --radiolist --height "255" --text "<b>Select</b> Workspace Button Theme to apply:" --hide-header --column "Pick" --column "Item" FALSE "Default" FALSE "ygr" FALSE "Lovely Bacon")
+    [[ "${WM}" == "Default"      ]] && WORKSPACE_DEFAULT=1 || WORKSPACE_DEFAULT=0
+    [[ "${WM}" == "ygr"          ]] && WORKSPACE_YGR=1 || WORKSPACE_YGR=0
+    [[ "${WM}" == "Lovely Bacon" ]] && WORKSPACE_LB=1 || WORKSPACE_LB=0
+}
+
+WindowMenu() {
+    WM=$(zenity --list --radiolist --height "255" --text "<b>Select</b> Window Theme to apply:" --hide-header --column "Pick" --column "Item" FALSE "Default" FALSE "ygr" FALSE "Solarized")
+    [[ "${WM}" == "Default"   ]] && WINDOW_DEFAULT=1 || WINDOW_DEFAULT=0
+    [[ "${WM}" == "ygr"       ]] && WINDOW_YGR=1 || WINDOW_YGR=0
+    [[ "${WM}" == "Solarized" ]] && WINDOW_SOLARIZED=1 || WINDOW_SOLARIZED=0
+}
+
+StatusMenu() {
+    WM=$(zenity --list --radiolist --height "255" --text "<b>Select</b> Statusbar Theme to apply:" --hide-header --column "Pick" --column "Item" FALSE "Default" FALSE "ygr" FALSE "Solarized")
+    [[ "${WM}" == "Default"   ]] && STATUSBAR_DEFAULT=1 || STATUSBAR_DEFAULT=0
+    [[ "${WM}" == "ygr"       ]] && STATUSBAR_YGR=1 || STATUSBAR_YGR=0
+    [[ "${WM}" == "Solarized" ]] && STATUSBAR_SOLARIZED=1 || STATUSBAR_SOLARIZED=0
+}
+
+## workspace theme changers
+# default
+workspace_default() {
+    # change name of theme in config
+    sed -i 's|^##  workspace theme.*$|##  workspace theme - default|' ${configfile}
+    # rename the workspaces in config file
+    sed -i 's|^set $tag0  "1:.*$|set $tag0  "1:1"|' ${configfile}
+    sed -i 's|^set $tag1  "2:.*$|set $tag1  "2:2"|' ${configfile}
+    sed -i 's|^set $tag2  "3:.*$|set $tag2  "3:3"|' ${configfile}
+    sed -i 's|^set $tag3  "4:.*$|set $tag3  "4:4"|' ${configfile}
+    sed -i 's|^set $tag4  "5:.*$|set $tag4  "5:5"|' ${configfile}
+    sed -i 's|^set $tag5  "6:.*$|set $tag5  "6:6"|' ${configfile}
+    sed -i 's|^set $tag6  "7:.*$|set $tag6  "7:7"|' ${configfile}
+    sed -i 's|^set $tag7  "8:.*$|set $tag7  "8:8"|' ${configfile}
+    sed -i 's|^set $tag8  "9:.*$|set $tag8  "9:9"|' ${configfile}
+    sed -i 's|^set $tag9 "10:.*$|set $tag9 "10:10"|' ${configfile}
+    # rename used workspaces to new ones to ease transission
+    [[ ${tag0} != "" ]] && i3-msg 'rename workspace "'${tag0}'" to "1:1"'
+    [[ ${tag1} != "" ]] && i3-msg 'rename workspace "'${tag1}'" to "2:2"'
+    [[ ${tag2} != "" ]] && i3-msg 'rename workspace "'${tag2}'" to "3:3"'
+    [[ ${tag3} != "" ]] && i3-msg 'rename workspace "'${tag3}'" to "4:4"'
+    [[ ${tag4} != "" ]] && i3-msg 'rename workspace "'${tag4}'" to "5:5"'
+    [[ ${tag5} != "" ]] && i3-msg 'rename workspace "'${tag5}'" to "6:6"'
+    [[ ${tag6} != "" ]] && i3-msg 'rename workspace "'${tag6}'" to "7:7"'
+    [[ ${tag7} != "" ]] && i3-msg 'rename workspace "'${tag7}'" to "8:8"'
+    [[ ${tag8} != "" ]] && i3-msg 'rename workspace "'${tag8}'" to "9:9"'
+    [[ ${tag9} != "" ]] && i3-msg 'rename workspace "'${tag9}'" to "10:10"'
+}
+
+# ygr
+workspace_ygr() {
+    # change name of theme in config
+    sed -i 's|^##  workspace theme.*$|##  workspace theme - ygr|' ${configfile}
+    # rename the workspaces in config file
+    sed -i 's|^set $tag0  "1:.*$|set $tag0  "1:   "|' ${configfile}
+    sed -i 's|^set $tag1  "2:.*$|set $tag1  "2:  "|' ${configfile}
+    sed -i 's|^set $tag2  "3:.*$|set $tag2  "3:  "|' ${configfile}
+    sed -i 's|^set $tag3  "4:.*$|set $tag3  "4:  "|' ${configfile}
+    sed -i 's|^set $tag4  "5:.*$|set $tag4  "5:  "|' ${configfile}
+    sed -i 's|^set $tag5  "6:.*$|set $tag5  "6:  "|' ${configfile}
+    sed -i 's|^set $tag6  "7:.*$|set $tag6  "7:  "|' ${configfile}
+    sed -i 's|^set $tag7  "8:.*$|set $tag7  "8:  "|' ${configfile}
+    sed -i 's|^set $tag8  "9:.*$|set $tag8  "9:  "|' ${configfile}
+    sed -i 's|^set $tag9 "10:.*$|set $tag9 "10:  "|' ${configfile}
+    # rename used workspaces to new ones to ease transission
+    [[ ${tag0} != "" ]] && i3-msg 'rename workspace "'${tag0}'" to "1:   "'
+    [[ ${tag1} != "" ]] && i3-msg 'rename workspace "'${tag1}'" to "2:  "'
+    [[ ${tag2} != "" ]] && i3-msg 'rename workspace "'${tag2}'" to "3:  "'
+    [[ ${tag3} != "" ]] && i3-msg 'rename workspace "'${tag3}'" to "4:  "'
+    [[ ${tag4} != "" ]] && i3-msg 'rename workspace "'${tag4}'" to "5:  "'
+    [[ ${tag5} != "" ]] && i3-msg 'rename workspace "'${tag5}'" to "6:  "'
+    [[ ${tag6} != "" ]] && i3-msg 'rename workspace "'${tag6}'" to "7:  "'
+    [[ ${tag7} != "" ]] && i3-msg 'rename workspace "'${tag7}'" to "8:  "'
+    [[ ${tag8} != "" ]] && i3-msg 'rename workspace "'${tag8}'" to "9:  "'
+    [[ ${tag9} != "" ]] && i3-msg 'rename workspace "'${tag9}'" to "10:  "'
+}
+
+# lovelybacon
+workspace_lb() {
+    # change name of theme in config
+    sed -i 's|^##  workspace theme.*$|##  workspace theme - lovelybacon|' ${configfile}
+    # rename the workspaces in config file
+    sed -i 's|^set $tag0  "1:.*$|set $tag0  "1:  "|' ${configfile}
+    sed -i 's|^set $tag1  "2:.*$|set $tag1  "2:  "|' ${configfile}
+    sed -i 's|^set $tag2  "3:.*$|set $tag2  "3:  "|' ${configfile}
+    sed -i 's|^set $tag3  "4:.*$|set $tag3  "4:  "|' ${configfile}
+    sed -i 's|^set $tag4  "5:.*$|set $tag4  "5:  "|' ${configfile}
+    sed -i 's|^set $tag5  "6:.*$|set $tag5  "6:  "|' ${configfile}
+    sed -i 's|^set $tag6  "7:.*$|set $tag6  "7:  "|' ${configfile}
+    sed -i 's|^set $tag7  "8:.*$|set $tag7  "8:  "|' ${configfile}
+    sed -i 's|^set $tag8  "9:.*$|set $tag8  "9:  "|' ${configfile}
+    sed -i 's|^set $tag9 "10:.*$|set $tag9 "10:  "|' ${configfile}
+    # rename used workspaces to new ones to ease transission
+    [[ ${tag0} != "" ]] && i3-msg 'rename workspace "'${tag0}'" to "1:  "'
+    [[ ${tag1} != "" ]] && i3-msg 'rename workspace "'${tag1}'" to "2:  "'
+    [[ ${tag2} != "" ]] && i3-msg 'rename workspace "'${tag2}'" to "3:  "'
+    [[ ${tag3} != "" ]] && i3-msg 'rename workspace "'${tag3}'" to "4:  "'
+    [[ ${tag4} != "" ]] && i3-msg 'rename workspace "'${tag4}'" to "5:  "'
+    [[ ${tag5} != "" ]] && i3-msg 'rename workspace "'${tag5}'" to "6:  "'
+    [[ ${tag6} != "" ]] && i3-msg 'rename workspace "'${tag6}'" to "7:  "'
+    [[ ${tag7} != "" ]] && i3-msg 'rename workspace "'${tag7}'" to "8:  "'
+    [[ ${tag8} != "" ]] && i3-msg 'rename workspace "'${tag8}'" to "9:  "'
+    [[ ${tag9} != "" ]] && i3-msg 'rename workspace "'${tag9}'" to "10:  "'
+}
+
+## window theme chane
+# default
+window_default() {
+    # change name of theme in config
+    sed -i 's|^##  window theme.*$|##  window theme - default|' ${configfile}
+    # focused client
+    sed -i 's|^set $FCo #.*$|set $FCo #4c7899|' ${configfile}
+    sed -i 's|^set $FCb #.*$|set $FCb #285577|' ${configfile}
+    sed -i 's|^set $FCt #.*$|set $FCt #ffffff|' ${configfile}
+    sed -i 's|^set $FCi #.*$|set $FCi #2e9ef4|' ${configfile}
+    # unfocused client
+    sed -i 's|^set $UCo #.*$|set $UCo #333333|' ${configfile}
+    sed -i 's|^set $UCb #.*$|set $UCb #222222|' ${configfile}
+    sed -i 's|^set $UCt #.*$|set $UCt #888888|' ${configfile}
+    sed -i 's|^set $UCi #.*$|set $UCi #292d2d|' ${configfile}
+    # focused_inactive client
+    sed -i 's|^set $ICo #.*$|set $ICo #333333|' ${configfile}
+    sed -i 's|^set $ICb #.*$|set $ICb #5f676a|' ${configfile}
+    sed -i 's|^set $ICt #.*$|set $ICt #ffffff|' ${configfile}
+    sed -i 's|^set $ICi #.*$|set $ICi #484e50|' ${configfile}
+    # urgent client
+    sed -i 's|^set $CCo #.*$|set $CCo #2f343a|' ${configfile}
+    sed -i 's|^set $CCb #.*$|set $CCb #900000|' ${configfile}
+    sed -i 's|^set $CCt #.*$|set $CCt #ffffff|' ${configfile}
+    sed -i 's|^set $CCi #.*$|set $CCi #900000|' ${configfile}
+    # placeholder
+    sed -i 's|^set $PCo #.*$|set $PCo #000000|' ${configfile}
+    sed -i 's|^set $PCb #.*$|set $PCb #0c0c0c|' ${configfile}
+    sed -i 's|^set $PCt #.*$|set $PCt #ffffff|' ${configfile}
+    sed -i 's|^set $PCi #.*$|set $PCi #000000|' ${configfile}
+    # background
+    sed -i 's|^set $CLb #.*$|set $CLb #ffffff|' ${configfile}
+}
+
+# ygr
+window_ygr() {
+    # change name of theme in config
+    sed -i 's|^##  window theme.*$|##  window theme - ygr|' ${configfile}
+    # focused client
+    sed -i 's|^set $FCo #.*$|set $FCo #839469|' ${configfile}
+    sed -i 's|^set $FCb #.*$|set $FCb #839496|' ${configfile}
+    sed -i 's|^set $FCt #.*$|set $FCt #00252e|' ${configfile}
+    sed -i 's|^set $FCi #.*$|set $FCi #00252e|' ${configfile}
+    # unfocused client
+    sed -i 's|^set $UCo #.*$|set $UCo #00252e|' ${configfile}
+    sed -i 's|^set $UCb #.*$|set $UCb #00252e|' ${configfile}
+    sed -i 's|^set $UCt #.*$|set $UCt #839496|' ${configfile}
+    sed -i 's|^set $UCi #.*$|set $UCi #839496|' ${configfile}
+    # focused_inactive client
+    sed -i 's|^set $ICo #.*$|set $ICo #00252e|' ${configfile}
+    sed -i 's|^set $ICb #.*$|set $ICb #00252e|' ${configfile}
+    sed -i 's|^set $ICt #.*$|set $ICt #839496|' ${configfile}
+    sed -i 's|^set $ICi #.*$|set $ICi #00252e|' ${configfile}
+    # urgent client
+    sed -i 's|^set $CCo #.*$|set $CCo #e59847|' ${configfile}
+    sed -i 's|^set $CCb #.*$|set $CCb #e59847|' ${configfile}
+    sed -i 's|^set $CCt #.*$|set $CCt #00252e|' ${configfile}
+    sed -i 's|^set $CCi #.*$|set $CCi #839496|' ${configfile}
+    # placeholder
+    sed -i 's|^set $PCo #.*$|set $PCo #839496|' ${configfile}
+    sed -i 's|^set $PCb #.*$|set $PCb #839496|' ${configfile}
+    sed -i 's|^set $PCt #.*$|set $PCt #839496|' ${configfile}
+    sed -i 's|^set $PCi #.*$|set $PCi #839496|' ${configfile}
+    # background
+    sed -i 's|^set $CLb #.*$|set $CLb #ffffff|' ${configfile}
+}
+
+# solarized
+window_solarized() {
+    # change name of theme in config
+    sed -i 's|^##  window theme.*$|##  window theme - solarized|' ${configfile}
+    # focused client
+    sed -i 's|^set $FCo #.*$|set $FCo #859900|' ${configfile}
+    sed -i 's|^set $FCb #.*$|set $FCb #859900|' ${configfile}
+    sed -i 's|^set $FCt #.*$|set $FCt #fdf6e3|' ${configfile}
+    sed -i 's|^set $FCi #.*$|set $FCi #859900|' ${configfile}
+    # focused_inactive client
+    sed -i 's|^set $ICo #.*$|set $ICo #073642|' ${configfile}
+    sed -i 's|^set $ICb #.*$|set $ICb #073642|' ${configfile}
+    sed -i 's|^set $ICt #.*$|set $ICt #eee8d5|' ${configfile}
+    sed -i 's|^set $ICi #.*$|set $ICi #6c71c4|' ${configfile}
+    # unfocused client
+    sed -i 's|^set $UCo #.*$|set $UCo #073642|' ${configfile}
+    sed -i 's|^set $UCb #.*$|set $UCb #073642|' ${configfile}
+    sed -i 's|^set $UCt #.*$|set $UCt #93a1a1|' ${configfile}
+    sed -i 's|^set $UCi #.*$|set $UCi #586e75|' ${configfile}
+    # urgent client
+    sed -i 's|^set $CCo #.*$|set $CCo #d33682|' ${configfile}
+    sed -i 's|^set $CCb #.*$|set $CCb #d33682|' ${configfile}
+    sed -i 's|^set $CCt #.*$|set $CCt #fdf6e3|' ${configfile}
+    sed -i 's|^set $CCi #.*$|set $CCi #dc322f|' ${configfile}
+    # placeholder (no distinct colours, so default is used)
+    sed -i 's|^set $PCo #.*$|set $PCo #000000|' ${configfile}
+    sed -i 's|^set $PCb #.*$|set $PCb #0c0c0c|' ${configfile}
+    sed -i 's|^set $PCt #.*$|set $PCt #ffffff|' ${configfile}
+    sed -i 's|^set $PCi #.*$|set $PCi #000000|' ${configfile}
+    # background (no distinct colours, so default is used)
+    sed -i 's|^set $CLb #.*$|set $CLb #ffffff|' ${configfile}
+}
+
+## statusbar theme change
+# default
+statusbar_default() {
+    # change name of theme in config
+    sed -i 's|^##  status bar theme.*$|##  status bar theme - default|' ${configfile}
+    # bar colours
+    sed -i 's|^set $stl #.*$|set $stl #ffffff|' ${configfile}
+    sed -i 's|^set $sep #.*$|set $sep #666666|' ${configfile}
+    sed -i 's|^set $bkd #.*$|set $bkd #000000|' ${configfile}
+    # focused workspace
+    sed -i 's|^set $FWo #.*$|set $FWo #4c7899|' ${configfile}
+    sed -i 's|^set $FWb #.*$|set $FWb #285577|' ${configfile}
+    sed -i 's|^set $FWt #.*$|set $FWt #ffffff|' ${configfile}
+    # active workspace
+    sed -i 's|^set $AWo #.*$|set $AWo #333333|' ${configfile}
+    sed -i 's|^set $AWb #.*$|set $AWb #5f676a|' ${configfile}
+    sed -i 's|^set $AWt #.*$|set $AWt #ffffff|' ${configfile}
+    # inactive workspace
+    sed -i 's|^set $IWo #.*$|set $IWo #333333|' ${configfile}
+    sed -i 's|^set $IWb #.*$|set $IWb #222222|' ${configfile}
+    sed -i 's|^set $IWt #.*$|set $IWt #888888|' ${configfile}
+    # urgent workspace
+    sed -i 's|^set $UWo #.*$|set $UWo #2f343a|' ${configfile}
+    sed -i 's|^set $UWb #.*$|set $UWb #900000|' ${configfile}
+    sed -i 's|^set $UWt #.*$|set $UWt #ffffff|' ${configfile}
+    # binding mode
+    sed -i 's|^set $BMo #.*$|set $BMo #2f343a|' ${configfile}
+    sed -i 's|^set $BMb #.*$|set $BMb #900000|' ${configfile}
+    sed -i 's|^set $BMt #.*$|set $BMt #ffffff|' ${configfile}
+}
+
+# ygr
+statusbar_ygr() {
+    # change name of theme in config
+    sed -i 's|^##  status bar theme.*$|##  status bar theme - ygr|' ${configfile}
+    # bar colours
+    sed -i 's|^set $stl #.*$|set $stl #26cece|' ${configfile}
+    sed -i 's|^set $sep #.*$|set $sep #aaaaaa|' ${configfile}
+    sed -i 's|^set $bkd #.*$|set $bkd #000000|' ${configfile}
+    # focused workspace
+    sed -i 's|^set $FWo #.*$|set $FWo #191919|' ${configfile}
+    sed -i 's|^set $FWb #.*$|set $FWb #000000|' ${configfile}
+    sed -i 's|^set $FWt #.*$|set $FWt #2e9afe|' ${configfile}
+    # active workspace
+    sed -i 's|^set $AWo #.*$|set $AWo #191919|' ${configfile}
+    sed -i 's|^set $AWb #.*$|set $AWb #000000|' ${configfile}
+    sed -i 's|^set $AWt #.*$|set $AWt #696f89|' ${configfile}
+    # inactive workspace
+    sed -i 's|^set $IWo #.*$|set $IWo #191919|' ${configfile}
+    sed -i 's|^set $IWb #.*$|set $IWb #000000|' ${configfile}
+    sed -i 's|^set $IWt #.*$|set $IWt #696f89|' ${configfile}
+    # urgent workspace
+    sed -i 's|^set $UWo #.*$|set $UWo #191919|' ${configfile}
+    sed -i 's|^set $UWb #.*$|set $UWb #000000|' ${configfile}
+    sed -i 's|^set $UWt #.*$|set $UWt #bf3f34|' ${configfile}
+    # binding mode
+    sed -i 's|^set $BMo #.*$|set $BMo #141414|' ${configfile}
+    sed -i 's|^set $BMb #.*$|set $BMb #d91c07|' ${configfile}
+    sed -i 's|^set $BMt #.*$|set $BMt #cccccc|' ${configfile}
+}
+
+# solarized
+statusbar_solarized() {
+    # change name of theme in config
+    sed -i 's|^##  status bar theme.*$|##  status bar theme - solarized|' ${configfile}
+    # bar colours
+    sed -i 's|^set $sep #.*$|set $sep #dc322f|' ${configfile}
+    sed -i 's|^set $bkd #.*$|set $bkd #002b36|' ${configfile}
+    sed -i 's|^set $stl #.*$|set $stl #268bd2|' ${configfile}
+    # focused workspace
+    sed -i 's|^set $FWo #.*$|set $FWo #002b36|' ${configfile}
+    sed -i 's|^set $FWb #.*$|set $FWb #859900|' ${configfile}
+    sed -i 's|^set $FWt #.*$|set $FWt #002b36|' ${configfile}
+    # active workspace
+    sed -i 's|^set $AWo #.*$|set $AWo #002b36|' ${configfile}
+    sed -i 's|^set $AWb #.*$|set $AWb #6c71c4|' ${configfile}
+    sed -i 's|^set $AWt #.*$|set $AWt #002b36|' ${configfile}
+    # inactive workspace
+    sed -i 's|^set $IWo #.*$|set $IWo #586e75|' ${configfile}
+    sed -i 's|^set $IWb #.*$|set $IWb #93a1a1|' ${configfile}
+    sed -i 's|^set $IWt #.*$|set $IWt #002b36|' ${configfile}
+    # urgent workspace
+    sed -i 's|^set $UWo #.*$|set $UWo #d33682|' ${configfile}
+    sed -i 's|^set $UWb #.*$|set $UWb #d33682|' ${configfile}
+    sed -i 's|^set $UWt #.*$|set $UWt #002b36|' ${configfile}
+    # binding mode
+    sed -i 's|^set $BMo #.*$|set $BMo #2f343a|' ${configfile}
+    sed -i 's|^set $BMb #.*$|set $BMb #900000|' ${configfile}
+    sed -i 's|^set $BMt #.*$|set $BMt #ffffff|' ${configfile}
+}
+
+[[ $1 == "-h" ]] && usage
+[[ $1 == "" ]] && MainMenu
+[[ "${WORKSPACE_DEFAULT}" == "1"   ]] && workspace_default
+[[ "${WORKSPACE_YGR}" == "1"       ]] && workspace_ygr
+[[ "${WORKSPACE_LB}" == "1"        ]] && workspace_lb
+[[ "${WINDOW_DEFAULT}" == "1"      ]] && window_default
+[[ "${WINDOW_YGR}" == "1"          ]] && window_ygr
+[[ "${WINDOW_SOLARIZED}" == "1"    ]] && window_solarized
+[[ "${STATUSBAR_DEFAULT}" == "1"   ]] && statusbar_default
+[[ "${STATUSBAR_YGR}" == "1"       ]] && statusbar_ygr
+[[ "${STATUSBAR_SOLARIZED}" == "1" ]] && statusbar_solarized
+[[ $((WORKSPACE_DEFAULT + WORKSPACE_YGR + WORKSPACE_LB + WINDOW_DEFAULT + WINDOW_YGR + WINDOW_SOLARIZED + STATUSBAR_DEFAULT + STATUSBAR_YGR + STATUSBAR_SOLARIZED)) -gt 0 ]] && i3-msg 'restart'
+

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+##----------------------------------------------------------------------------------------
+##-- author   Joe Biden aka ygoreus                                                    --
+##-- version  0.1                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=sh syn=sh :                                         --
+##----------------------------------------------------------------------------------------
+##-- Toggles the i3 status bar between dock and invisible, if i hide it i don't wanna see it.
+
+## intialize variables
+barstatus=$(i3-msg -t get_bar_config bar-0 | jshon -e mode -u)
+
+## toggle the dock
+[[ $barstatus == "dock" ]] && i3-msg 'bar mode invisible' || i3-msg 'bar mode dock'
+

@@ -1,0 +1,57 @@
+##-- keybindings  programs
+##----------------------------------------------------------------------------------------
+
+##  open a terminal
+bindsym $mod+Return exec --no-startup-id /usr/bin/st
+bindsym $mod+$sft+Return exec --no-startup-id /usr/bin/st -t 'stf'
+bindsym Menu        exec --no-startup-id /usr/bin/urxvtc
+
+##  open the menu
+bindsym $mod+d exec --no-startup-id /usr/bin/dmenu_run -q -o 0.8 -p '  '
+
+##  open a web browser
+bindsym $sup+w      exec --no-startup-id $GC
+bindsym $sup+$sft+w exec --no-startup-id $IC
+bindsym $sup+$mod+w exec --no-startup-id $CB
+
+##  function key behaviour
+bindsym XF86ScreenSaver    exec --no-startup-id /usr/bin/env sh $i3exit lock
+bindsym XF86Sleep          exec --no-startup-id /usr/bin/env sh $i3exit suspend
+bindsym XF86Suspend        exec --no-startup-id /usr/bin/env sh $i3exit hibernate
+bindsym XF86TouchpadToggle exec --no-startup-id /usr/bin/env sh $trackpad
+
+##  volume keybindings
+bindsym XF86AudioMute             exec --no-startup-id /usr/bin/env sh $volume toggle
+bindsym XF86AudioRaiseVolume      exec --no-startup-id /usr/bin/env sh $volume up 4
+bindsym XF86AudioLowerVolume      exec --no-startup-id /usr/bin/env sh $volume down 4
+bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id /usr/bin/env sh $volume up 12
+bindsym $mod+XF86AudioLowerVolume exec --no-startup-id /usr/bin/env sh $volume down 12
+
+##  multimedia keys
+bindsym XF86AudioPlay exec --no-startup-id /usr/bin/mpc toggle
+bindsym XF86AudioPrev exec --no-startup-id /usr/bin/mpc prev
+bindsym XF86AudioNext exec --no-startup-id /usr/bin/mpc next
+bindsym XF86AudioStop exec --no-startup-id /usr/bin/mpc stop
+
+##  backlight keybindings
+bindsym XF86MonBrightnessUp        exec --no-startup-id /usr/bin/env sh $backlight up 4
+bindsym XF86MonBrightnessDown      exec --no-startup-id /usr/bin/env sh $backlight down 4
+bindsym $mod+XF86MonBrightnessUp   exec --no-startup-id /usr/bin/env sh $backlight standard
+bindsym $mod+XF86MonBrightnessDown exec --no-startup-id /usr/bin/env sh $backlight off
+
+##  invoke binding modes
+bindsym $mod+r      mode "$mode_resize"
+bindsym $mod+$sft+g mode "$mode_gaps"
+bindsym $mod+$sft+m mode "$mode_moveit"
+bindsym $mod+$sft+x mode "$mode_sessionmgr"
+
+##  toggle the status bar
+bindsym $mod+m exec --no-startup-id /usr/bin/env sh $bartoggle
+
+##  scratchpad keybindings
+bindsym $mod+minus      scratchpad show
+bindsym $mod+$sft+minus move scratchpad
+
+##  sticky window keybindings
+bindsym $mod+$sft+z     sticky toggle
+

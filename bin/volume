@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+##----------------------------------------------------------------------------------------
+##-- Author   Joe Biden aka ygr                                                        --
+##-- version  0.1                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=sh syn=sh :                                         --
+##----------------------------------------------------------------------------------------
+
+## initialize variables
+pipe="/tmp/volpipe"
+[[ $(awk '/\[o/  {gsub(/[\[\]]/,"") ; print $6}' <(amixer sget Master)) == 'on' ]] && mute1="1" || mute1="0"
+vlvl=`awk '/%/ {gsub(/[\[%\]]/,""); print $4}' <(amixer sget Master)`
+lvli=${2:-2}
+
+## volume command
+#volume="/usr/bin/amixer -D pulse sset Master"
+volume="amixer -D pulse sset Master"
+case "${1}" in
+    "up"|"u") volume+=" unmute ${2:-2}%+" ; v_lvl=$((vlvl+lvli)) ; mute="0" ;;
+    "down"|"d") volume+=" unmute ${2:-2}%-" ; v_lvl=$((vlvl-ilvl)) ; mute="0" ;;
+    "toggle"|"t"|*) volume+=" toggle" ; v_lvl=${vlvl} ; mute="${mute1}" ;;
+esac
+[[ ${v_lvl} -ge 100 ]] && v_lvl="100"
+
+## change the volume
+setvolume(){
+    ${volume}
+    pkill -SIGRTMIN+10 i3blocks
+}
+
+## popup
+popup(){
+    bar_bg="#232323"
+    [[ ${mute} = '0' ]] && bar_fg="#19cf08" || bar_fg="#dd0000"
+    dzen_args=( -tw 200 -h 26 -x 1710 -y 30 -bg '#101010' )
+    gdbar_args=( -w 180 -h 12 -fg ${bar_fg} -bg ${bar_bg} -max 100 -min 0 )
+    if [[ ! -e "${pipe}" ]]; then
+        mkfifo "${pipe}"
+        (dzen2 "${dzen_args[@]}" < "${pipe}"; rm -f "${pipe}" ) &
+    fi
+    (echo ${v_lvl/.*/} | gdbar "${gdbar_args[@]}" -max 100; sleep 1) >> "$pipe"
+}
+
+## do the stuff
+setvolume && popup

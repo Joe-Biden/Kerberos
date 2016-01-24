@@ -1,0 +1,34 @@
+#!/usr/bin/env zsh
+## vim: set nu ai et ts=4 sw=4 ft=zsh syn=sh :
+
+## variables
+CTY=${1:-US}
+pacdir="/etc/pacman.d"
+mlistus="/etc/pacman.d/mirrorlist.us"
+mlistfl="/etc/pacman.d/mirrorlist"
+mlistbk="/etc/pacman.d/mirrorlist.backup"
+archurl="https://www.archlinux.org/mirrorlist/?country=${CTY}"
+
+## errors
+error-msg() {
+    echo -e " ERROR >>> $1 "
+    exit 2
+}
+
+## update function
+update-mirrors() {
+    [[ -e $mlistus ]] && rm -rf $mlistus
+    [[ -e $mlistfl ]] && mv -f $mlistfl $mlistbk
+    echo -e " >>> Downloading the current ${CTY} mirrorlist..."
+    wget -q -c '$archurl' -O $mlistus
+    sed -i 's|^#Server|Server|' $mlistus
+    echo -e " >>> Ranking the servers..."
+    rankmirrors -n 10 $mlistus > $mlistfl
+    echo -e " >>> Mirrors updated, guy..."
+    exit 1
+}
+
+## do stuff
+[[ $2 == "rollback" ]] && mv -f $mlistbk $mlistfl && exit 1
+[[ -d $pacdir ]] && update-mirrors || error-msg "You are not on an arch linux system..."
+

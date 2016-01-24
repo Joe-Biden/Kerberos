@@ -1,0 +1,39 @@
+##-- window theme and status bar
+##----------------------------------------------------------------------------------------
+
+##  window theme
+## colourclass             border      background  text        indicator
+client.focused             $FCo        $FCb        $FCt        $FCi
+client.unfocused           $UCo        $UCb        $UCt        $UCi
+client.focused_inactive    $ICo        $ICb        $ICt        $ICi
+client.urgent              $CCo        $CCb        $CCt        $CCi
+client.placeholder         $PCo        $PCb        $PCt        $PCi
+client.background                      $CLb
+
+##  status bar
+bar {
+    height 22
+    separator_symbol " "
+    status_command i3blocks
+    font xft:Hermit, Symbola, FontAwesome 10px
+    position top
+    mode invisible
+    modifier $ctl
+    workspace_buttons yes
+    strip_workspace_numbers yes
+    binding_mode_indicator yes
+    tray_output primary
+    tray_padding 0
+    colors {
+            statusline         $stl
+            separator          $sep
+            background         $bkd
+            ##      class      border      background  text
+            focused_workspace  $FWo        $FWb        $FWt
+            active_workspace   $AWo        $AWb        $AWt
+            inactive_workspace $IWo        $IWb        $IWt
+            urgent_workspace   $UWo        $UWb        $UWt
+            binding_mode       $BMo        $BMb        $BMt
+    }
+}
+

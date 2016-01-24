@@ -1,0 +1,26 @@
+##----------------------------------------------------------------------------------------
+##-- Editor   vim: set nu ai et ts=4 sw=4 :                                            --
+##-- file     ${dotfiles_dir}/etc/fstab                                                --
+##-- Author   Joe Biden aka ygr                                                        --
+##-- Version  0.1                                                                      --
+##----------------------------------------------------------------------------------------
+
+## main filesystems
+LABEL=boot_fs       /boot   vfat    defaults,discard,errors=remount-ro  0 1
+LABEL=root_fs       /       btrfs   defaults,discard,noatime,ssd,compress=lzo,subvol=ROOT,errors=remount-ro  0 0
+LABEL=root_fs       /home   btrfs   defaults,discard,noatime,ssd,compress=lzo,subvol=HOME,errors=remount-ro  0 0
+LABEL=swap_space    none    swap    defaults,discard  0 0
+
+## put google chrome data in ram
+tmpfs   /home/ygr/.config/google-chrome/Default     tmpfs   mode=0777,noatime,uid=ygr,gid=anomaly  0 0
+tmpfs   /home/ygr/.cache/google-chrome              tmpfs   mode=0777,noatime,uid=ygr,gid=anomaly  0 0
+
+## put downloads directory in ram
+tmpfs   /home/ygr/downloads     tmpfs   defaults,mode=0777,noatime,uid=ygr,gid=anomaly  0 0
+tmpfs   /home/ygr/.tmp          tmpfs   defaults,mode=0777,noatime,uid=ygr,gid=anomaly  0 0
+
+## take some precautions
+tmpfs   /tmp                    tmpfs   defaults,mode=0777,noatime  0 0
+tmpfs   /var/cache/pacman/pkg   tmpfs   defaults,mode=0777,noatime  0 0
+tmpfs   /home/ygr/.purple       tmpfs   defaults,mode=0777,noatime  0 0
+

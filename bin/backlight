@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+##----------------------------------------------------------------------------------------
+##-- author   Joe Biden aka ygoreus                                                    --
+##-- version  0.1                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=sh syn=sh :                                         --
+##----------------------------------------------------------------------------------------
+
+## initialize variables
+pipe="/tmp/lightpipe"
+blvl=`awk '{print(int($1+0.5))}' <(xbacklight -get)`
+lvli=${2:-4}
+
+## backlight command
+backlight="xbacklight"
+case "${1}" in
+    "u"|"up") backlight+=" -inc ${lvli}" ; b_lvl=$((blvl+lvli)) ;;
+    "d"|"down") backlight+=" -dec ${lvli}" ; b_lvl=$((blvl-lvli)) ;;
+    "o"|"off") backlight+=" -set 0" ; b_lvl="0" ;;
+    "s"|"standard"|*) backlight+=" -set 25" ; b_lvl="25" ;;
+esac
+[[ ${b_lvl} -ge 100 ]] && b_lvl="100"
+
+## change backlighting
+setbacklight(){
+    $backlight
+    pkill -SIGRTMIN+11 i3blocks
+}
+
+## popup
+popup(){
+    bar_bg="#232323"
+    bar_fg="#fcd116"
+    dzen_args=( -tw 200 -h 26 -x 1710 -y 30 -bg '#101010' )
+    gdbar_args=( -w 180 -h 12 -fg ${bar_fg} -bg ${bar_bg} -max 100 -min 0 )
+    if [[ ! -e "$pipe" ]]; then
+        mkfifo "$pipe"
+        (dzen2 "${dzen_args[@]}" < "${pipe}"; rm -f "${pipe}" ) &
+    fi
+    (echo ${b_lvl/.*/} | gdbar "${gdbar_args[@]}"; sleep 1) >> "${pipe}"
+}
+
+## do the stuff
+setbacklight && popup

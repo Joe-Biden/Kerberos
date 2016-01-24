@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+##----------------------------------------------------------------------------------------
+##-- author   Joe Biden aka ygoreus                                                    --
+##-- version  0.1                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=sh syn=sh :                                         --
+##----------------------------------------------------------------------------------------
+
+## initialize variables
+mouse=`awk '/TouchpadOff/ { print $3 }' <(synclient -l)`
+
+## Do the stuff
+case ${mouse} in
+    0) synclient TouchpadOff=1 ;;
+    1) synclient TouchpadOff=0 ;;
+    *) exit 1 ;;
+esac

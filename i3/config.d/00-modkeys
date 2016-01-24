@@ -1,0 +1,20 @@
+##----------------------------------------------------------------------------------------
+##-- Author   Joe Biden aka ygr                                                        --
+##-- Version  1.0                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=i3 syn=i3 :                                         --
+##----------------------------------------------------------------------------------------
+
+##  Set Variables
+##----------------------------------------------------------------------------------------
+
+##  Mod keys
+set $mod Mod1
+set $sup Mod4
+set $ctl Control
+set $sft Shift
+
+##  output screens - sys76-lemur
+set $screen1 eDP1
+set $screen2 eDP1
+set $screen3 eDP1
+

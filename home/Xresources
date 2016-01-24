@@ -1,0 +1,675 @@
+!!----------------------------------------------------------------------------------------
+!!-- Author   Joe Biden aka ygr                                                        --
+!!-- Dotfile  ${HOME}/.Xresources                                                      --
+!!-- vim: set nu ai et ts=4 sw=4 ft=xdefaults syn=xdefaults :                           --
+!!----------------------------------------------------------------------------------------
+
+!!  general options
+!!----------------------------------------------------------------------------------------
+
+!!  Global Fonts
+ *font: \
+    xft:Hermit:medium:size=10, \
+    xft:Dejavu Sans Mono For Powerline:normal:size=10, \
+    xft:Symbola:normal:size=10
+ *boldFont: \
+    xft:Dejavu Sans Mono For Powerline:bold:size=10, \
+    xft:Font Awesome:bold:size=10, \
+    xft:Symbola:bold:size=10
+ *italicFont: \
+    xft:Hermit:italic:size=10, \
+    xft:Font Awesome:italic:size=10, \
+    xft:Symbola:italic:size=10
+ *boldItalicFont: \
+    xft:Hermit:bold:italic:size=10, \
+    xft:Font Awesome:bold:italic:size=10, \
+    xft:Symbola:bold:italic:size=10
+
+!!  Xft options
+!! normal screen
+ Xft.dpi                                    : 96
+ Xft.autohint                               : false
+ Xft.lcdfilter                              : lcddefault
+ Xft.hintstyle                              : hintslight
+ Xft.hinting                                : true
+ Xft.antialias                              : true
+ Xft.rgba                                   : none
+!! 4k screen
+!Xft.dpi                                    : 180
+!Xft.autohint                               : false
+!Xft.lcdfilter                              : lcddefault
+!Xft.hintstyle                              : hintful
+!Xft.hinting                                : true
+!Xft.antialias                              : true
+!Xft.rgba                                   : rgb
+!! macbook pro retina
+!Xft.dpi                                    : 182
+!Xft.autohint                               : false
+!Xft.lcdfilter                              : lcddefault
+!Xft.hintstyle                              : hintslight
+!Xft.hinting                                : true
+!Xft.antialias                              : true
+!Xft.rgba                                   : none
+
+!!  Cursor options
+ Xcursor.theme                              : aDMZ
+ Xcursor.size                               : 16
+ Xcursor.theme_core                         : true
+
+!!  Tk theme
+ *TkTheme                                   : clam
+
+!!  colour schemes
+!! define the external colourscheme
+ #include "/home/ygr/.config/etc/dotfiles/home/jwr.colours.xdefaults"
+
+!!  terminal options
+!!----------------------------------------------------------------------------------------
+
+!!  URxvt options
+!! fonts
+ URxvt*font: \
+    xft:Hermit:medium:size=10
+ URxvt*boldFont: \
+    xft:Dejavu Sans Mono For Powerline:normal:size=10
+ URxvt*italicFont: \
+    xft:Hermit:medium:size=10
+ URxvt*boldItalicFont: \
+    xft:Dejavu Sans Mono For Powerline:normal:size=10
+!! general options
+ URxvt*termname                             : rxvt-unicode-256color
+ URxvt*modifier                             : alt
+ URxvt*geometry                             : 100x45
+ URxvt*savelines                            : 0
+ URxvt*letterSpace                          : 0
+ URxvt*lineSpace                            : 0
+ URxvt*imLocate                             : en_US.UTF-8
+ URxvt*allow_bold                           : true
+ URxvt*boldMode                             : true
+ URxvt*loginShell                           : false
+ URxvt*multiClickTime                       : 500
+ URxvt*utmpInhibit                          : false
+ URxvt*skipBuiltinGlyphs                    : false
+ URxvt*meta8                                : false
+ URxvt*tripleclickwords                     : true
+ URxvt*secondaryScreen                      : true
+ URxvt*secondaryScroll                      : true
+ URxvt*hold                                 : false
+ URxvt*mouseWheelScrollPage                 : false
+ URxvt*pastableTabs                         : true
+ URxvt*buffered                             : true
+ URxvt*fading                               : false
+ URxvt*intensityStyles                      : true
+ URxvt*pointerBlank                         : false
+ URxvt*pointerBlankDelay                    : 2
+!! border
+ URxvt*internalBorder                       : 0
+ URxvt*externalBorder                       : 0
+ URxvt*borderLess                           : false
+!! disable faulty alerts
+ URxvt*urgentOnBell                         : false
+ URxvt*visualBell                           : false
+ URxvt*mapAlert                             : false
+ URxvt*insecure                             : false
+!! scrollbar options
+ URxvt*scrollBar                            : false
+ URxvt*scrollstyle                          : plain
+ URxvt*thickness                            : false
+ URxvt*scrollBar_right                      : true
+ URxvt*scrollBar_floating                   : false
+ URxvt*scrollBar_align                      : centre
+ URxvt*scrollTtyOutput                      : true
+ URxvt*scrollWithBuffer                     : false
+ URxvt*scrollTtyKeypress                    : true
+ URxvt*jumpScroll                           : false
+ URxvt*skipScroll                           : false
+!! disable key capture mode
+ URxvt*iso14755                             : false
+ URxvt*iso14755_52                          : false
+!! colour options
+ URxvt*buffered                             : true
+ URxvt*transparent                          : false
+!URxvt*shading                              : 80
+!URxvt*depth                                : 0
+!URxvt*background                           : #090909
+!URxvt*foreground                           : #848484
+!URxvt*reverseVideo                         : true
+ URxvt*cursorColor                          : #395573
+ URxvt*cursorUnderline                      : false
+ URxvt*cursorBlink                          : true
+ URxvt*fadeColor                            : #111111
+ URxvt*scrollColor                          : #b2b2b2
+ URxvt*throughColor                         : #969696
+ URxvt*borderColor                          : #000000
+!! totally badass keybinds
+ URxvt*print-pipe                           : cat > /home/ygr/.local/log/urxvt.dump.$(date +'%Y-%M-%d--%H:%m:%S')
+!! perl extentions
+ URxvt*perl-ext-common                      :
+!! perl extention: tabbedex
+ URxvt*tabbed*autohide                      : true
+ URxvt*tabbed*new-button                    : false
+ URxvt*tabbed*title                         : true
+ URxvt*tabbed*title-fg                      : 7
+ URxvt*tabbed*title-bg                      : 0
+ URxvt*tabbed*tabbar-fg                     : 14
+ URxvt*tabbed*tabbar-bg                     : 0
+ URxvt*tabbed*tab-fg                        : 0
+ URxvt*tabbed*tab-bg                        : 1
+!! perl extention: url-selec                t
+ URxvt*url-launcher                         : /usr/bin/luakit
+ URxvt*url-select*launcher                  : /usr/bin/luakit
+
+!!  XTerm options
+
+
+!!  Ftjerm options
+!! mod keys
+ ftjerm*key                                 : Grave
+ ftjerm*mod                                 : alt
+!ftjerm*fullscreenkey                       : f11
+!ftjerm*keymod                              : control
+ ftjerm*autohide                            : false
+ ftjerm*font                                : Hermit 8
+ ftjerm*allowbold                           : true
+ ftjerm*border                              : 1
+ ftjerm*opacity                             : 100%
+!ftjerm*bgimage                             : /path/to/image
+!! positioning
+ ftjerm*width                               : 100%
+ ftjerm*height                              : 90%
+ ftjerm*position                            : top
+ ftjerm*scroll                              : true
+ ftjerm*scrollbar                           : none
+ ftjerm*shell                               : /usr/bin/zsh
+ ftjerm*lines                               : 0
+ ftjerm*fixedX                              : 0
+ ftjerm*fixedY                              : 0
+!! tabs
+ ftjerm*showtab                             : one
+ ftjerm*tabpos                              : bottom
+ ftjerm*tablabel                            : term
+ ftjerm*tabfill                             : false
+ ftjerm*showonstart                         : false
+ ftjerm*allowreorder                        : true
+!! cursor
+ ftjerm*cursorblink                         : on
+ ftjerm*cursorshape                         : block
+ ftjerm*mouseautohide                       : true
+!! colours
+ ftjerm*background                          : #000000
+ ftjerm*foreground                          : #aaaaaa
+!ftjerm*Color0                              : #
+!ftjerm*Color8                              : #
+!ftjerm*Color1                              : #
+!ftjerm*Color9                              : #
+!ftjerm*Color2                              : #
+!ftjerm*Color10                             : #
+!ftjerm*Color3                              : #
+!ftjerm*Color11                             : #
+!ftjerm*Color4                              : #
+!ftjerm*Color12                             : #
+!ftjerm*Color5                              : #
+!ftjerm*Color13                             : #
+!ftjerm*Color6                              : #
+!ftjerm*Color14                             : #
+!ftjerm*Color7                              : #
+!ftjerm*Color15                             : #
+
+
+
+
+!!  program options
+!!----------------------------------------------------------------------------------------
+
+!!  Dmenu options
+ dmenu*font                                 : Hermit-6,Symbola-6
+ dmenu*foreground                           : #d9d9d9
+ dmenu*background                           : #000000
+ dmenu*selforeground                        : #26cece
+ dmenu*selbackground                        : #000000
+
+!!  Rofi options
+ rofi*font                                  : Hermit 7
+ rofi*opacity                               : 85
+ rofi*terminal                              : /usr/bin/st
+ rofi*ssh-set-title                         : true
+ rofi*disable-history                       : true
+!! key options
+ rfoi*key-window                            : mod4+Tab
+ rofi*key-run                               : mod4+p
+ rofi*key-ssh                               : mod4+F3
+!! size options
+ rofi*width                                 : 1300
+ rofi*lines                                 : 7
+ rofi*columns                               : 4
+!! colours
+ rofi*fg                                    : #e5dbcf
+ rofi*bg                                    : #0f3b5f
+ rofi*hlfg                                  : #0f3b5f
+ rofi*hlbg                                  : #cc9752
+ rofi*bc                                    : #cc9752
+!! positioning
+ rofi*bw                                    : 2
+ rofi*location                              : 6
+ rofi*padding                               : 1
+ rofi*yoffset                               : -22
+ rofi*xoffset                               : 0
+ rofi*fixed-num-lines                       : true
+ rofi*hmode                                 : false
+
+!! 
+
+
+!!  Emacs options
+
+
+!!  Dzen2 options
+ dzen2*font                                 : Dejavu Sans Mono:size=8
+ dzen2*foreground                           : #aaaaaa
+ dzen2*background                           : #000000
+
+!!  XClock options
+ XClock*input                               : false
+ XClock*width                               : 164
+ XClock*height                              : 164
+!XClock*update                              :
+!XClock*hands                               :
+!XClock*highlight                           :
+!XClock*analog                              :
+!XClock*twentyfour                          :
+!XClock*chime                               :
+!XClock*padding                             :
+!XClock*font                                :
+!XClock*render                              :
+!XClock*face                                :
+!XClock*sharp                               :
+!XClock*buffer                              :
+!! colours
+ XClock*background                          : #000000
+ XClock*foreground                          : #848484
+ XClock*Clock*hourColor                     : #26cece
+ XClock*Clock*minuteColor                   : #26cece
+ XClock*Clock*secondColor                   : #3399bb
+ XClock*Clock*majorColor                    : #3399bb
+ XClock*Clock*minorColor                    : #3399bb
+
+!!  XCalc options
+!! general options
+!xcalc*font                                 :
+ xcalc*geometry                             : 250x320
+ xcalc*utf8                                 : true
+ xcalc*imLocale                             : en_US.utf-8
+ xcalc*Cursor                               : hand2
+ xcalc*ShapeStyle                           : rectangle
+ xcalc*background                           : #000000
+ xcalc*foreground                           : #cccccc
+ xcalc*ti*command*background                : #777777
+ xcalc*ti*command*foreground                : White
+!! bevel options
+ xcalc*ti*bevel*background                  : #26cece
+ xcalc*ti*bevel*screen*background           : #000000
+ xcalc*ti*bevel*screen*DEG*background       : #000000
+ xcalc*ti*bevel*screen*DEG*foreground       : LightSeaGreen
+ xcalc*ti*bevel*screen*GRAD*background      : #000000
+ xcalc*ti*bevel*screen*GRAD*foreground      : LightSeaGreen
+ xcalc*ti*bevel*screen*RAD*background       : #000000
+ xcalc*ti*bevel*screen*RAD*foreground       : LightSeaGreen
+ xcalc*ti*bevel*screen*INV*background       : #000000
+ xcalc*ti*bevel*screen*INV*foreground       : LightSeaGreen
+ xcalc*ti*bevel*screen*LCD*background       : #000000
+ xcalc*ti*bevel*screen*LCD*foreground       : LightSeaGreen
+ xcalc*ti*bevel*screen*LCD*shadowWidth      : 0
+ xcalc*ti*bevel*screen*M*background         : #000000
+ xcalc*ti*bevel*screen*M*foreground         : LightSeaGreen
+ xcalc*ti*bevel*screen*P*background         : #000000
+ xcalc*ti*bevel*screen*P*foreground         : LightSeaGreen
+!! button defaults
+ xcalc*vertDistance                         : 1
+ xcalc*horizDistance                        : 1
+!! button: recipricol [1/x]
+!xcalc*ti*button1*borderColor               : #26cece
+!xcalc*ti*button1*background                : #222222
+!xcalc*ti*button1*foreground                : #26cece
+!xcalc*ti*button1*label                     : 1/x
+!! button: square [2]
+!xcalc*ti*button2*borderColor               : #26cece
+!xcalc*ti*button2*background                : #222222
+!xcalc*ti*button2*foreground                : #26cece
+!xcalc*ti*button2*label                     : ^2
+!! button: squareroot [v/]
+!xcalc*ti*button3*borderColor               : #26cece
+!xcalc*ti*button3*background                : #222222
+!xcalc*ti*button3*foreground                : #26cece
+!xcalc*ti*button3*label                     : v(
+!! button: clear entry [CE/C]
+!xcalc*ti*button4*borderColor               : #26cece
+!xcalc*ti*button4*background                : #222222
+!xcalc*ti*button4*foreground                : #26cece
+!xcalc*ti*button4*label                     : CE/C
+!! button: clear all [AC]
+!xcalc*ti*button5*borderColor               : #26cece
+!xcalc*ti*button5*background                : #222222
+!xcalc*ti*button5*foreground                : #26cece
+!xcalc*ti*button5*label                     : AC
+!! button: inverse [INV]
+!xcalc*ti*button6*borderColor               : #26cece
+!xcalc*ti*button6*background                : #222222
+!xcalc*ti*button6*foreground                : #26cece
+!xcalc*ti*button6*label                     : INV
+!! button: sine function [sin]
+!xcalc*ti*button7*borderColor               : #26cece
+!xcalc*ti*button7*background                : #222222
+!xcalc*ti*button7*foreground                : #26cece
+!xcalc*ti*button7*label                     : Sin
+!! button: cosine function [cos]
+!xcalc*ti*button8*borderColor               : #26cece
+!xcalc*ti*button8*background                : #222222
+!xcalc*ti*button8*foreground                : #26cece
+!xcalc*ti*button8*label                     : Cos
+!! button: tangent function [tan]
+!xcalc*ti*button9*borderColor               : #26cece
+!xcalc*ti*button9*background                : #222222
+!xcalc*ti*button9*foreground                : #26cece
+!xcalc*ti*button9*label                     : Tan
+!! button: degree/radian/gradient [DRG]
+!xcalc*ti*button10*borderColor              : #26cece
+!xcalc*ti*button10*background               : #222222
+!xcalc*ti*button10*foreground               : #26cece
+!xcalc*ti*button10*label                    : DRG
+!! button: eulers number [e]
+!xcalc*ti*button11*borderColor              : #26cece
+!xcalc*ti*button11*background               : #222222
+!xcalc*ti*button11*foreground               : #26cece
+!xcalc*ti*button11*label                    : e
+!! button: exponential [EE]
+!xcalc*ti*button12*borderColor              : #26cece
+!xcalc*ti*button12*background               : #222222
+!xcalc*ti*button12*foreground               : #26cece
+!xcalc*ti*button12*label                    : EE
+!! button: logarithm [log]
+!xcalc*ti*button13*borderColor              : #26cece
+!xcalc*ti*button13*background               : #222222
+!xcalc*ti*button13*foreground               : #26cece
+!xcalc*ti*button13*label                    : log
+!! button: natural logarithm [ln]
+!xcalc*ti*button14*borderColor              : #26cece
+!xcalc*ti*button14*background               : #222222
+!xcalc*ti*button14*foreground               : #26cece
+!xcalc*ti*button14*label                    : ln
+!! button: exponent [y^x]
+!xcalc*ti*button15*borderColor              : #26cece
+!xcalc*ti*button15*background               : #222222
+!xcalc*ti*button15*foreground               : #26cece
+!xcalc*ti*button15*label                    : y^x
+!! button: pi constant [pi]
+!xcalc*ti*button16*borderColor              : #26cece
+!xcalc*ti*button16*background               : #222222
+!xcalc*ti*button16*foreground               : #26cece
+!xcalc*ti*button16*label                    : pi
+!! button: factorial [x!]
+!xcalc*ti*button17*borderColor              : #26cece
+!xcalc*ti*button17*background               : #222222
+!xcalc*ti*button17*foreground               : #26cece
+!xcalc*ti*button17*label                    : x!
+!! button: left parenthesis [(]
+!xcalc*ti*button18*borderColor              : #26cece
+!xcalc*ti*button18*background               : #222222
+!xcalc*ti*button18*foreground               : #26cece
+!xcalc*ti*button18*label                    : (
+!! button: right parenthesis [)]
+!xcalc*ti*button19*borderColor              : #26cece
+!xcalc*ti*button19*background               : #222222
+!xcalc*ti*button19*foreground               : #26cece
+!xcalc*ti*button19*label                    : )
+!! button: division [/]
+!xcalc*ti*button20*borderColor              : #26cece
+!xcalc*ti*button20*background               : #222222
+!xcalc*ti*button20*foreground               : #26cece
+!xcalc*ti*button20*label                    : /
+!! button: store variable [STO]
+!xcalc*ti*button21*borderColor              : #26cece
+!xcalc*ti*button21*background               : #222222
+!xcalc*ti*button21*foreground               : #26cece
+!xcalc*ti*button21*label                    : STO
+!! button: 7 [7]
+!xcalc*ti*button22*borderColor              : #26cece
+!xcalc*ti*button22*background               : #222222
+!xcalc*ti*button22*foreground               : #26cece
+!xcalc*ti*button22*label                    : 7
+!! button: 8 [8]
+!xcalc*ti*button23*borderColor              : #26cece
+!xcalc*ti*button23*background               : #222222
+!xcalc*ti*button23*foreground               : #26cece
+!xcalc*ti*button23*label                    : 8
+!! button: 9 [9]
+!xcalc*ti*button24*borderColor              : #26cece
+!xcalc*ti*button24*background               : #222222
+!xcalc*ti*button24*foreground               : #26cece
+!xcalc*ti*button24*label                    : 9
+!! button: multiply [*]
+!xcalc*ti*button25*borderColor              : #26cece
+!xcalc*ti*button25*background               : #222222
+!xcalc*ti*button25*foreground               : #26cece
+!xcalc*ti*button25*label                    : *
+!! button: recall key [RCL]
+!xcalc*ti*button26*borderColor              : #26cece
+!xcalc*ti*button26*background               : #222222
+!xcalc*ti*button26*foreground               : #26cece
+!xcalc*ti*button26*label                    : RCL
+!! button: 4 [4]
+!xcalc*ti*button27*borderColor              : #26cece
+!xcalc*ti*button27*background               : #222222
+!xcalc*ti*button27*foreground               : #26cece
+!xcalc*ti*button27*label                    : 4
+!! button: 5 [5]
+!xcalc*ti*button28*borderColor              : #26cece
+!xcalc*ti*button28*background               : #222222
+!xcalc*ti*button28*foreground               : #26cece
+!xcalc*ti*button28*label                    : 5
+!! button: 6 [6]
+!xcalc*ti*button29*borderColor              : #26cece
+!xcalc*ti*button29*background               : #222222
+!xcalc*ti*button29*foreground               : #26cece
+!xcalc*ti*button29*label                    : 6
+!! button: subtraction [-]
+!xcalc*ti*button30*borderColor              : #26cece
+!xcalc*ti*button30*background               : #222222
+!xcalc*ti*button30*foreground               : #26cece
+!xcalc*ti*button30*label                    : -
+!! button: [SUM]
+!xcalc*ti*button31*borderColor              : #26cece
+!xcalc*ti*button31*background               : #222222
+!xcalc*ti*button31*foreground               : #26cece
+!xcalc*ti*button31*label                    : SUM
+!! button: 1 [1]
+!xcalc*ti*button32*borderColor              : #26cece
+!xcalc*ti*button32*background               : #222222
+!xcalc*ti*button32*foreground               : #26cece
+!xcalc*ti*button32*label                    : 1
+!! button: 2 [2]
+!xcalc*ti*button33*borderColor              : #26cece
+!xcalc*ti*button33*background               : #222222
+!xcalc*ti*button33*foreground               : #26cece
+!xcalc*ti*button33*label                    : 2
+!! button: 3 [3]
+!xcalc*ti*button34*borderColor              : #26cece
+!xcalc*ti*button34*background               : #222222
+!xcalc*ti*button34*foreground               : #26cece
+!xcalc*ti*button34*label                    : 3
+!! button: addition [+]
+!xcalc*ti*button35*borderColor              : #26cece
+!xcalc*ti*button35*background               : #222222
+!xcalc*ti*button35*foreground               : #26cece
+!xcalc*ti*button35*label                    : +
+!! button: [EXC]
+!xcalc*ti*button36*borderColor              : #26cece
+!xcalc*ti*button36*background               : #222222
+!xcalc*ti*button36*foreground               : #26cece
+!xcalc*ti*button36*label                    : EXC
+!! button: 0 [0]
+!xcalc*ti*button37*borderColor              : #26cece
+!xcalc*ti*button37*background               : #222222
+!xcalc*ti*button37*foreground               : #26cece
+!xcalc*ti*button37*label                    : 0
+!! button: decimal point [.]
+!xcalc*ti*button38*borderColor              : #26cece
+!xcalc*ti*button38*background               : #222222
+!xcalc*ti*button38*foreground               : #26cece
+!xcalc*ti*button38*label                    : .
+!! button: change vector [+/-]
+!xcalc*ti*button39*borderColor              : #26cece
+!xcalc*ti*button39*background               : #222222
+!xcalc*ti*button39*foreground               : #26cece
+!xcalc*ti*button39*label                    : +/-
+!! button: calculate [=]
+!xcalc*ti*button40*borderColor              : #26cece
+!xcalc*ti*button40*background               : #222222
+!xcalc*ti*button40*foreground               : #26cece
+!xcalc*ti*button40*label                    : =
+
+!!  XScreensaver options
+!xscreensaver*Dialog*headingFont            : xft:Hermit:medium:size=10
+!xscreensaver*Dialog*bodyFont               : xft:Hermit:medium:size=10
+!xscreensaver*Dialog*labelFont              : xft:Hermit:medium:size=10
+!xscreensaver*Dialog*unameFont              : xft:Hermit:medium:size=10
+!xscreensaver*Dialog*buttonFont             : xft:Hermit:medium:size=10
+!xscreensaver*Dialog*dateFont               : xft:Hermit:medium:size=10
+!xscreensaver*passwd*passwdFont             : xft:Hermit:medium:size=10
+!! colours
+!xscreensaver*Dialog*foreground             : #7f8f9f
+!xscreensaver*Dialog*background             : #0c0d0e
+!xscreensaver*Dialog*topShadowColor         : #0c0d0e
+!xscreensaver*Dialog*bottomShadowColor      : #0c0d0e
+!xscreensaver*Dialog*Button*foreground      : #0c0d0e
+!xscreensaver*Dialog*Button*background      : #7f8f9f
+!xscreensaver*Dialog*text*foreground        : #0c0d0e
+!xscreensaver*Dialog*text*background        : #7f8f9f
+!xscreensaver*Dialog*internalBorderWidth    : 24
+!xscreensaver*Dialog*borderWidth            : 20
+!xscreensaver*Dialog*shadowThickness        : 2
+!xscreensaver*passwd*thermometer*foreground : #7f8f9f
+!xscreensaver*passwd*thermometer*background : #0c0d0e
+!xscreensaver*passwd*thermometer*width      : 10
+!xscreensaver*xscreensaver*dateFormat       : %I:%M%P %a %b %d, %Y
+
+!!  Sxiv options
+ sxiv*geometry                              : 600x600
+
+!!  XPdf options
+!Xpdf*initialZoom                           : width
+!Xpdf*enableFreetype                        : yes
+!Xpdf*antialias                             : yes
+!Xpdf*foreground                            : white
+!Xpdf*background                            : black
+!Xpdf*urlCommand                            : /usr/bin/luakit %s
+
+!!  Xdvi options
+!! fonts
+!xdvi*font                                  : -*-terminus-medium-7-*-*-12-*-*-*-*-*-*-*
+!xdvi*statusline                            : -*-terminus-medium-7-*-*-11-*-*-*-*-*-*-*
+!! general options
+!xdvi*shrinkFactor                          : 7
+!xdvi*keepPosition                          : true
+!xdvi*gsAlpha                               : true
+!xdvi*gamma                                 : 1.200000
+!xdvi*geometry                              : 802x1023
+!xdvi*editor                                :
+!xdvi*highlight                             :
+!xdvi*expert                                :
+!xdvi*efMode                                :
+!xdvi*paper                                 :
+!xdvi*wwwBrowser                            :
+!xdvi*wheelTranslations                     :
+!! fix menu
+!xdvi*button*fillOnArm                      : true
+!xdvi*button*shadowThickness                : 1
+!xdvi*toolBar*marginHeight                  : 0
+!xdvi*toolBarButtonsRaised                  : true
+!xdvi*toolBarFrame*marginWidth              : 0
+!xdvi*highlightThickness                    : 2
+
+!!  XConsole options
+!XConsole*consoleLog                        : /tmp/conslog
+!XConsole*colseWindow*font                  : -adobe-new century schoolbook-bold-r-normal--14-140-75-75-*
+!XConsole*doTitle                           : true
+!XConsole*Command*resize                    : false
+!XConsole*colseWindow*horizDistance         : 452
+!XConsole*colseWindow*internalHeight        : 2
+!XConsole*colseWindow*borderWidth           : 2
+!XConsole*colseWindow*label                 : Hide
+!XConsole*colseWindow*bottom                : ChainTop
+!XConsole*colseWindow*left                  : ChainRight
+!XConsole*colseWindow*right                 : ChainRight
+!XConsole*colseWindow*top                   : ChainTop
+!XConsole*displayNonPrinting                : false
+!XConsole*reverseVideo                      : true
+!XConsole*text*font                         : fixed
+!XConsole*text*borderWidth                  : 1
+!XConsole*text*bottom                       : ChainBottom
+!XConsole*text*displayCaret                 : false
+!XConsole*text*fromVert                     : title
+!XConsole*text*height                       : 150
+!XConsole*text*horizDistance                : 6
+!XConsole*text*left                         : ChainLeft
+!XConsole*text*right                        : ChainRight
+!XConsole*text*top                          : ChainTop
+!XConsole*text*width                        : 780
+!XConsole*thickness                         : 10
+!XConsole*title*borderWidth                 : 0
+!XConsole*title*bottom                      : ChainTop
+!XConsole*title*label                       : CONSOLE
+!XConsole*title*left                        : ChainLeft
+!XConsole*title*right                       : ChainRight
+!XConsole*title*top                         : ChainTop
+!XConsole*title*width                       : 150
+!XConsole*autoRaise                         : on
+!XConsole*geometry                          : +900+0
+!XConsoleFrame*defaultDistance              : 1
+!! colours
+!XConsole*background                        : dimgrey
+!XConsole*foreground                        : gold
+
+!!  XMessage options
+!xmessage*font                              : -*-clean-*-*-*-*-*-*-*-*-*-*-iso8859-2
+!xmessage*form*okay*shapeStyle              : Rectangle
+!xmessage*Command*shapeStyle                : Rectangle
+!xmessage*Scrollbar*width                   : 1
+!xmessage*Scrollbar*borderWidth             : 0
+!xmessage*Command*highlightThickness        : 1
+!xmessage*Command*internalWidth             : 5
+!xmessage*Command*internalHeight            : 3
+!! colours
+!xmessage*form*okay*background              : IndianRed
+!xmessage*form*okay*foreground              : rgb:e/b/b
+!xmessage*message*background                : Ivory3
+!xmessage*background                        : Gray85
+!xmessage*foreground                        : Gray15
+!xmessage*Text*?*cursorColor                : rgb:d/5/5
+!xmessage*Text*borderColor                  : Gray65
+!xmessage*Text*background                   : Gray95
+!xmessage*Command*borderColor               : Gray40
+!xmessage*Command*background                : Gray80
+
+!!  XVkbd options
+!xvkbd*windowGeometry                       : 500x240+0+16
+!xvkbd*resizable                            : false
+!xvkbd*autoRepeat                           : false
+!xvkbd*keypad                               : false
+!xvkbd*customization                        : -latin1
+
+!!  GNU Plot options
+!! colours
+!gnuplot*background                         :
+!gnuplot*foreground                         :
+!gnuplot*textColor                          :
+!gnuplot*borderColor                        :
+!gnuplot*axisColor                          :
+!gnuplot*line1Color                         :
+!gnuplot*line2Color                         :
+!gnuplot*line3Color                         :
+!gnuplot*line4Color                         :
+!gnuplot*line5Color                         :
+!gnuplot*line6Color                         :
+!gnuplot*line7Color                         :
+!gnuplot*line8Color                         :
+

@@ -1,0 +1,51 @@
+##-- keybindings  workspace
+##----------------------------------------------------------------------------------------
+
+##  workspace back and forth
+bindsym $mod+b      workspace back_and_forth
+bindsym $mod+$sft+b move container to workspace back_and_forth; workspace back_and_forth
+
+##  navigate workspaces
+bindsym $mod+$ctl+comma  workspace prev
+bindsym $mod+$ctl+Left   workspace prev
+bindsym $mod+$sft+Tab    workspace prev
+bindsym $mod+$ctl+period workspace next
+bindsym $mod+$ctl+Right  workspace next
+bindsym $mod+Tab         workspace next
+
+##  change to workspace
+bindsym $mod+1 workspace $tag0
+bindsym $mod+2 workspace $tag1
+bindsym $mod+3 workspace $tag2
+bindsym $mod+4 workspace $tag3
+bindsym $mod+5 workspace $tag4
+bindsym $mod+6 workspace $tag5
+bindsym $mod+7 workspace $tag6
+bindsym $mod+8 workspace $tag7
+bindsym $mod+9 workspace $tag8
+bindsym $mod+0 workspace $tag9
+
+##  move focused to container to workspace
+bindsym $mod+Shift+1 move container to workspace $tag0
+bindsym $mod+Shift+2 move container to workspace $tag1
+bindsym $mod+Shift+3 move container to workspace $tag2
+bindsym $mod+Shift+4 move container to workspace $tag3
+bindsym $mod+Shift+5 move container to workspace $tag4
+bindsym $mod+Shift+6 move container to workspace $tag5
+bindsym $mod+Shift+7 move container to workspace $tag6
+bindsym $mod+Shift+8 move container to workspace $tag7
+bindsym $mod+Shift+9 move container to workspace $tag8
+bindsym $mod+Shift+0 move container to workspace $tag9
+
+##  move and follow focused container to workspace
+bindsym $sup+Shift+1 move container to workspace $tag0; workspace $tag0
+bindsym $sup+Shift+2 move container to workspace $tag1; workspace $tag1
+bindsym $sup+Shift+3 move container to workspace $tag2; workspace $tag2
+bindsym $sup+Shift+4 move container to workspace $tag3; workspace $tag3
+bindsym $sup+Shift+5 move container to workspace $tag4; workspace $tag4
+bindsym $sup+Shift+6 move container to workspace $tag5; workspace $tag5
+bindsym $sup+Shift+7 move container to workspace $tag6; workspace $tag6
+bindsym $sup+Shift+8 move container to workspace $tag7; workspace $tag7
+bindsym $sup+Shift+9 move container to workspace $tag8; workspace $tag8
+bindsym $sup+Shift+0 move container to workspace $tag9; workspace $tag9
+

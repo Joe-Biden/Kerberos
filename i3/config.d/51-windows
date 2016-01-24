@@ -1,0 +1,50 @@
+##  keybindings  windows
+##----------------------------------------------------------------------------------------
+
+##  use vim keys to change focused container, we're not animals we live in a society
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+##  use vim keys to move focused container, again not animals.. society..
+bindsym $mod+$sft+h move left
+bindsym $mod+$sft+j move down
+bindsym $mod+$sft+k move up
+bindsym $mod+$sft+l move right
+
+##  use arrow keys to change focused container
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+##  use arrow keys to move focused container
+bindsym $mod+$sft+Left  move left
+bindsym $mod+$sft+Down  move down
+bindsym $mod+$sft+Up    move up
+bindsym $mod+$sft+Right move right
+
+##  change container layout
+bindsym $mod+s stacked
+bindsym $mod+w tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen toggle
+
+##  focus the parent / child container
+bindsym $mod+a      focus parent
+bindsym $mod+$sft+a focus child
+
+##  change new window split orientation
+bindsym $sup+h split h
+bindsym $sup+v split v
+
+##  floating windows
+bindsym $mod+$sft+space floating toggle
+bindsym $mod+space      focus mode_toggle
+
+##  i3 system actions upgrade, restart, etc
+bindsym $mod+c      reload
+bindsym $mod+r      restart
+bindsym $mod+$sft+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
+

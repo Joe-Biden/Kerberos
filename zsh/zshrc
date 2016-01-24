@@ -1,0 +1,721 @@
+##----------------------------------------------------------------------------------------
+##-- Author   Joe Biden aka ygr                                                        --
+##-- Dotfile  ${HOME}/.zshrc                                                           --
+##-- vim: set nu ai et ts=4 sw=4 ft=zsh syn=zsh :                                       --
+##----------------------------------------------------------------------------------------
+
+##  general zsh options
+##----------------------------------------------------------------------------------------
+
+##  set to do noting if not running interactively
+[[ $- != *i* ]] && return
+
+##  use vi bindings
+bindkey -v
+KEYTIMEOUT=1
+ ## show vi mode indication
+#function zle-line-init zle-keymap-select {
+#    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+#    RPROMPT=$'%{\e[1;33m%}'$RPS1$'%{\e[0m%}'
+#    zle reset-prompt
+#}
+#zle -N zle-line-init
+#zle -N zle-keymap-select
+
+##  history options
+ ## history variables
+HISTFILE="${HOME}/.config/etc/dotfiles/zsh/zhistory"
+HISTSIZE=10000
+SAVEHIST=$((HISTSIZE/2))
+ ## options
+#setopt sharehistory
+setopt histignorealldups
+setopt histexpiredupsfirst
+setopt histsavenodups
+#setopt histverify
+#setopt incappendhistory
+#setopt extendedhistory
+setopt appendhistory
+ ## search history
+bindkey -M viins '^R' history-incremental-search-backward
+bindkey -M vicmd '^R' history-incremental-search-backward
+
+##  extra options for sanity
+setopt interactivecomments
+setopt autocd
+setopt extendedglob
+setopt nomatch
+#setopt completealiases
+setopt correct
+setopt nocorrectall
+unsetopt beep notify
+DISBALE_AUTO_UPDATE="true"
+DISABLE_AUTO_TITLE="true"
+COMPLETION_WAITING_DOTS="true"
+CASE_SENSITIVE="true"
+
+##  fix keys
+ ## specific to linux console
+bindkey "[1~" begining-of-line
+ ## specific for suckless terminal
+bindkey "[H" begining-of-line
+ ## specific for xterm
+bindkey "OH" begining-of-line
+bindkey "OF" end-of-line
+ ## specific for urxvt
+bindkey "[7~" begining-of-line
+bindkey "[8~" end-of-line
+ ## for two or more different terminals
+bindkey "[2~" overwrite-mode
+bindkey "[3~" delete-char
+bindkey "[4~" end-of-line
+bindkey "[5~" begining-of-history
+bindkey "[6~" end-of-history
+
+##  use a modern completion system
+ ## load basic completions
+autoload -Uz compinit && compinit
+ ## load extra completions
+#zstyle ':completion:*' auto-description 'specify: %d'
+#zstyle ':completion:*' completer _expand _complete _correct _approximate
+#zstyle ':completion:*' format 'Completing %d'
+#zstyle ':completion:*' group-name ''
+#zstyle ':completion:*' menu select=2
+#eval "$(dircolors -b)"
+#zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+#zstyle ':completion:*' list-colors ''
+#zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+#zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+#zstyle ':completion:*' menu select=long
+#zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+#zstyle ':completion:*' use-compctl false
+#zstyle ':completion:*' verbose true
+#zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+#zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+##  set variables
+##----------------------------------------------------------------------------------------
+
+##  local variables
+export EDITOR="/usr/bin/vim"
+export FCEDIT="${EDITOR}"
+export VISUAL="${EDITOR}"
+export SUDO_EDITOR="/usr/bin/rvim --noplugin"
+export BROWSER="/usr/bin/luakit"
+[[ -s /usr/bin/vimpager ]] && \
+    export SDCV_PAGER="/usr/bin/vimpager" || \
+    export SDCV_PAGER="/usr/bin/less"
+export SYSTEMD_PAGER="/usr/bin/less -j4aR"
+export PAGER="${SDCV_PAGER}"
+[[ -s /usr/bin/mpv ]] && \
+    export MOVPLAY="/usr/bin/mpv" || \
+    export MOVPLAY="/usr/bin/mplayer"
+export SNDPLAY="${MOVPLAY}"
+export PICVIEW="/usr/bin/feh"
+export TERMINAL="/usr/bin/st"
+
+##  colour gcc output
+export CC="/usr/bin/colorgcc"
+
+##  colour man pages in less
+export LESS_TERMCAP_mb=$'\e[01;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\e[01;38;5;74m'  # begin bold
+export LESS_TERMCAP_me=$'\e[0m'           # end mode
+export LESS_TERMCAP_se=$'\e[0m'           # end standout-mode
+export LESS_TERMCAP_so=$'\e[38;5;246m'    # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\e[0m'           # end underline
+export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
+
+##  directory paths
+[[ -n $XDG_CONFIG_HOME ]] || \
+    export XDG_CONFIG_HOME="${HOME}/.config"
+[[ -n $XDG_CACHE_HOME ]] || \
+    export XDG_CACHE_HOME="${HOME}/.cache"
+[[ -n $XDG_DATA_HOME ]] || \
+    export XDG_DATA_HOME="${HOME}/.local/share"
+[[ -n $XDG_DESKTOP_DIR ]] || \
+    export XDG_DESTOP_DIR="${HOME}/.desktop"
+[[ -n $XDG_DOWNLOAD_DIR ]] || \
+    export XDG_DOWNLOAD_DIR="${HOME}/downloads"
+[[ -n $XDG_DOCUMENTS_DIR ]] || \
+    export XDG_DOCUMENTS_DIR="${HOME}/documents"
+[[ -n $XDG_MUSIC_DIR ]] || \
+    export XDG_MUSIC_DIR="${HOME}/media/music"
+[[ -n $XDG_VIDEOS_DIR ]] || \
+    export XDG_VIDEOS_DIR="${HOME}/media/video"
+[[ -n $XDG_PICTURES_DIR ]] || \
+    export XDG_PICTURES_DIR="${HOME}/media/pictures"
+[[ -n $XDG_TEMPLATES_DIR ]] || \
+    export XDG_TEMPLATES_DIR="${HOME}/.desktop/.templates"
+[[ -n $XDG_PUBLICSHARE_DIR ]] || \
+    export XDG_PUBLICSHARE_DIR="${HOME}/.desktop/.public"
+
+##  set console colours
+if [ "$TERM" = "linux" ]; then
+    echo -en "\e]P0000000" #black
+    echo -en "\e]P85e5e5e" #darkgrey
+    echo -en "\e]P18a2f58" #darkred
+    echo -en "\e]P9cf4f88" #red
+    echo -en "\e]P2287373" #darkgreen
+    echo -en "\e]PA53a6a6" #green
+    echo -en "\e]P3914e89" #darkyellow
+    echo -en "\e]PBbf85cc" #yellow
+    echo -en "\e]P4395573" #darkblue
+    echo -en "\e]PC4779b3" #blue
+    echo -en "\e]P55e468c" #darkmagenta
+    echo -en "\e]PD7f62b3" #magenta
+    echo -en "\e]P62b7694" #darkcyan
+    echo -en "\e]PE47959e" #cyan
+    echo -en "\e]P7899ca1" #lightgrey
+    echo -en "\e]PFc0c0c0" #white
+    clear # bring us back to default input colours
+fi
+
+##  color core utilities
+ ## grep colours
+export GREP_COLORS="38;5;230:sl=38;5;240:\
+    cs=38;5;100:mt=38;5;161;1:fn=38;5;197:\
+    ln=38;5;212:bn=38;5;44:se=38;5;166"
+ ## list colours
+[[ -s ${HOME}/.config/dircolours ]] && \
+    export LS_COLORS=`dircolors -b ${HOME}/.mydircolours` || \
+    export LS_COLORS=""
+
+
+##  aliases
+##----------------------------------------------------------------------------------------
+
+##  suffix aliases
+VID=( avi cue dat fcm flac flv m3u m4 m4a m4v mkv mov mp3 mp4 mpeg mpe mpg MOV ogg
+        ogm ogv rmvb sample spl ts wmv)
+
+CODE=( asm awk bash c cfg coffee conf config cpp cs css csv diff env eps etx ex example
+        git gitignore go h hs htm html info ini java jhtm js jsm json jsp lisp log lua
+        map markdown md mf mfasl mi mkd mtx nfo pacnew patch pc pfa php pid PKGBUILD pl
+        PL pm pod py rb rc rdf ru sed sfv sh signature sty sug t tcl tdy tex textile tfm
+        tfnt theme txt urlview vim viminfo xml yml zsh )
+
+FEH=( bmp cdr gif ico jpeg jpg JPG png svg xbm xpm )
+
+#XCHM=(  )
+
+alias -s $^VID="${MOVPLAY}"
+alias -s $^CODE="${EDITOR}"
+alias -s $^FEH="${PICVIEW}"
+#alias -s $^XCHM=""
+alias -s se="/usr/bin/ssh"
+
+##  frequent commands
+alias C='clear'
+[[ -n $TMUX ]] && \
+    alias q='exit' && \
+    alias Q='muxq' || \
+    alias Q='exit'
+alias wget='wget -c'
+alias qwget='wget -q'
+
+##  file operations
+[[ -s /usr/bin/rsync ]] && \
+    alias cp='rsync -ah --stats --progress' || \
+    alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -I --preserve-root'
+alias cpdir='cp -R'
+alias rmdir='rm -r'
+alias ln='ln -i'
+alias mmount='mount | column -t'
+
+##  network stuff
+[[ -s /usr/bin/prettyping.sh ]] && \
+    alias ping='/usr/bin/prettyping.sh' || \
+    alias ping='ping -c3'
+alias ports='netstat -tulanp'
+
+##  change user
+alias su='sudo -i'
+alias root='sudo -i'
+alias ygr='/usr/bin/su - ygr'
+
+##  power managemnet
+alias reboot='sudo systemctl reboot'
+alias restart='sudo systemctl reboot'
+alias poweroff='sudo systemctl poweroff'
+alias halt='sudo systemctl poweroff'
+alias shutdown='sudo systemctl poweroff'
+alias powertop='sudo powertop'
+[[ -d /sys/class/power_supply/BAT0 ]] && \
+    alias Bat0='upower -i /org/Freedesktop/UPower/devices/battery_BAT0'
+[[ -d /sys/class/power_supply/BAT1 ]] && \
+    alias Bat1='upower -i /org/Freedesktop/UPower/devices/battery_BAT1'
+[[ $HOST == 'T510' ]] && \
+    alias batcharges='sudo bash ${HOME}/programming/scripts/tp_battery_chrg'
+
+##  system management
+alias meminfo='free -mlt'
+ ## process by cpu
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+ ## process by mem
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+ ## cpu mein megahurtz
+alias cpuinfo='cat /proc/cpuinfo | grep "MHz"'
+ ## gpu memory
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+ ## monitor cpu temps
+alias cputemps='watch -n 1 -d sensors coretemp-isa-0000'
+ ## route top to htop
+alias top='htop'
+
+##  package manager
+alias pS='sudo pacman -S'
+alias pR='sudo pacman -R'
+alias pQ='pacman -Q'
+alias pU='sudo pacman -Syy && sudo pacman -Su'
+alias PSs='pacman -Ss'
+alias pSy='pS -y'
+alias pSyy='pS -yy'
+alias pSu='pU'
+alias pSyu='pU'
+alias pSyyu='pU'
+alias pQs='pQ -s'
+alias pQu='pQ -u'
+alias pQuc='pQ -u | wc -l'
+alias pQua='cower -u | wc -l'
+
+##  editor stuffs
+alias vi='vim'
+alias svi='sudo vim'
+alias vis='vim "+set si"'
+alias edit='${EDITOR}'
+alias e='${EDITOR}'
+
+##  preserve root permissions
+alias chown='chown --preserve-root'
+alias chgrp='chgrp --preserve-root'
+alias chmod='chmod --preserve-root'
+
+##  tmux
+alias muxq='tmux detach'
+
+##  make
+alias mk='make'
+alias smi='sudo make clean install'
+alias mkf='touch'
+alias mkd='mkdir -p'
+
+##  add verbosity to tools
+alias mkdv='mkdir -v'
+
+##  dotfiles
+alias dot='cd ${HOME}/.config/etc/dotfiles'
+ ## zsh
+alias eZ='${EDITOR:-vim} ${HOME}/.zshrc && source ${HOME}/.zshrc'
+ ## vim
+alias eV='${EDITOR:-vim} ${HOME}/.vimrc'
+ ## emacs
+ ## nano
+alias eN='${EDITOR:-vim} ${HOME}/.nanorc'
+ ## dwm
+alias eC='${EDITOR:-vim} ${HOME}/.dwm/config.h && pkill dwm'
+alias eCx='${EDITOR:-vim} ${HOME}/.dwm/dwmxinitrc && pkill dwm'
+ ## i3wm
+alias e3='${EDITOR:-vim} ${HOME}/.i3/config && i3-msg restart'
+alias e3b='${EDITOR:-vim} ${HOME}/.i3/blocks.config && i3-msg restart'
+alias e3x='${EDITOR:-vim} ${HOME}/.i3/i3xinitrc'
+ ## tmux
+alias eT='${EDITOR:-vim} ${HOME}/.tmux/tmux.conf'
+alias eTx='${EDITOR:-vim} ${HOME}/.tmux/inx'
+alias eTn='${EDITOR:-vim} ${HOME}/.tmux/xless'
+ ## xorg
+alias eX='${EDITOR:-vim} ${HOME}/.Xresources && xrdb -merge ${HOME}/.Xresources'
+ ## source the things
+alias W='i3-msg restart'
+alias Xr='xrdb -merge ${HOME}/.Xresources'
+alias Z='source ${HOME}/.zshrc'
+alias eD="cd ${HOME}/.config/etc/dotfiles && ll | grep '^[d]'"
+
+##  cd family
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias .2='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+ ## common directories
+alias cdS='cd ${HOME}/programming/scripts'
+alias cdP='cd ${HOME}/programming'
+alias cdC='cd ${XDG_CONFIG_HOME}'
+alias cdB='cd ${XDG_CONFIG_HOME}/etc/dotfiles'
+alias cdD='cd ${HOME}/documents'
+
+##  color utilities
+[[ -s /usr/bin/dfc ]] && \
+    alias df='dfc' || \
+    alias df='df -h'
+[[ -s /usr/bin/colordiff ]] && \
+    alias diff='colordiff' || \
+    alias diff='diff'
+[[ -s /usr/bin/cdu ]] && \
+    alias du='cdu -i' || \
+    alias du='du -ch'
+
+##  grep utilities
+alias grep='grep --color=always'
+alias pgrep='pgrep --color=always'
+alias fgrep='fgrep --color=always'
+alias egrep='egrep --color=always'
+
+##  ls family
+alias ls='ls -xF --group-directories-first --color=always'
+alias l='ls'
+alias ll='ls -lh'
+alias la='ll -A'
+alias l.='ls -d .*'
+alias ll.='ll -d .*'
+alias ld='ll | grep "^d" | awk "{print \$1,\$9,\$10,\$11}" | column -t'
+alias ld.='ll. | grep "^d" | awk "{print \$1,\$9,\$10,\$11}" | column -t'
+alias li='ll | grep "^l" | awk "{print \$1,\$9,\$10,\$11}" | column -t'
+alias li.='ll. | grep "^l" | awk "{print \$1,\$9,\$10,\$11}" | column -t'
+alias lf='ll | grep "^-" | awk "{print \$1,\$9}" | column -t'
+alias lf.='ll. | grep "^-" | awk "{print \$1,\$9}" | column -t'
+ ## make dir act like ls
+alias dir='ls'
+alias dirl='ll'
+alias dirh='lh'
+alias dira='la'
+
+##  misc
+ ## music player
+alias MP='ncmpcpp -s visualizer'
+alias Pods='cd ${HOME}/media/podcasts && ranger'
+ ## news sources
+alias news='newsbueter'
+alias mix='cortex linux'
+ ## social media
+alias twit='turses'
+ ## multimedia
+alias YT='youtube-viewer'
+ ## communication
+alias weechat='weechat-curses'
+alias irc='weechat-curses'
+alias irc_jb='irssi'
+ ## youtube downloader
+alias Y='youtube-dl'
+alias Ym='youtube-dl -x --audio-format mp3'
+ ## process control
+alias k='kill'
+alias kA='killall'
+alias pk='pkill'
+alias Pg='pgrep'
+alias Eg='egrep'
+alias Fg='fgrep'
+
+##  functions
+##----------------------------------------------------------------------------------------
+
+##  combine cd and ls
+function cl() { builtin cd $@; ls }
+
+##  word searches and stuff
+function dwordnet() { curl dict://dict.org/d:${1}:wn; }
+#function dacron() { curl dict://dict.org/d:${1}:vera; }
+#function djargon() { curl dict://dict.org/d:${1}:jargon; }
+#function dfoldoc() { curl dict://dict.org/d:${1}:foldoc; }
+#function dthesaurus() { curl dict://dict.org/d:${1}:moby-thes; }
+
+##  package fucntion ( arch linux )
+#function pkg() {
+#}
+
+##  systemctl shortcut
+function sys() {
+    case "$1" in
+        "e")
+            ctl="enable"
+        ;;
+        "d")
+            ctl="disable"
+        ;;
+        "l")
+            ctl="list-units"
+        ;;
+        "st")
+            ctl="status"
+        ;;
+        "s")
+            ctl="start"
+        ;;
+        "sp")
+            ctl="stop"
+        ;;
+    esac
+    service=$2
+    [[ -s /lib/systemd/system/${service}.service ]] && \
+        sudo systemctl ${ctl} ${service}.service || \
+        echo " >>> service '$2' is not found. [Remember, case matters] "
+}
+
+##  download videos from download
+function yt() {
+    dir=$(pwd)
+    ytdir="${HOME}/media/videos/youtube"
+    case "$1" in
+        "http*"|"www*"|"youtube*"|"youtu.be*")
+            target="${ytdir}/general"
+            vid=$1
+        ;;
+        *)
+            target="${ytdir}/$1"
+            vid=$2
+        ;;
+    esac
+    /usr/bin/mkdir -p ${target}
+    cd ${target}
+    youtube-dl '$vid'
+    cd $dir
+}
+
+##  tmux
+function mux() {
+    confile="${HOME}/.tmux/tmux.conf"
+    case "$1" in
+        "A"|"a"|"attach"|"Attach")
+            case "$2" in
+                "K"|"k"|"kerberos"|"Kerberos")
+                    [[ $(tmux ls | awk '/Kerberos/' | wc -l) -eq '1' ]] && \
+                    tmux -2 -f ${confile} attach -t Kerberos || \
+                    tmux -2 -f ${confile} new -s Kerberos
+                ;;
+                "M"|"m"|"main"|"Main")
+                    [[ $(tmux ls | awk '/Main/ ') -eq '1' ]] && \
+                    tmux -2 -f ${confile} attach -t Main || \
+                    tmux -2 -f ${confile} new -s Main
+                ;;
+                *)
+                    [[ $(tmux ls | awk '/${2}/ ') -eq '1' ]] && \
+                    tmux -2 -f ${confile} attach -t '${2}' || \
+                    tmux -2 -f ${confile} new -s ${2}
+                ;;
+            esac
+        ;;
+        *)
+            [[ -n $TMUX ]] && \
+            tmux detach || \
+            echo -e " >>> No action to take..."
+        ;;
+    esac
+}
+
+##  create backup of dotfiles
+function dots() {
+    case "$1" in
+        git)
+            cd ${HOME}/.config/etc/dotfiles
+            git add ./*
+            git commit -m '$(date +'%_H:%M:%S -- %d-%b-%y') update'
+            git push -u origin master
+        ;;
+        *)
+            cd ${HOME}
+            ## make a tarball of dotfiles
+            tar cvfx ${HOME}/$(date +'%_H:%M:%S -- %d-%b-%y')-backup.tar.gz ${HOME}/.config/etc/dotfiels
+            ## sign with gpg key
+            ## mv to dropbox folder
+        ;;
+    esac
+}
+
+##  compress files into an archive
+function c() {
+    case $1 in
+        *.tar.gz)
+            tar cvfz $1 ${@:2}
+        ;;
+        *.zip)
+            zip -r $1 ${@:2}
+        ;;
+        *)
+            echo " c: '$1'  -  unavailable compression option, choose 'tar.gz' or 'zip' and retry."
+        ;;
+    esac
+}
+
+##  extract files from archive
+function x() {
+    if [ -z "$1" ]; then
+        echo "Usage: x <path/to/file>.<ext>"
+    else
+        if [ -e $1 ]; then
+            error="0"
+            case '$1' in
+                *.tar.bz2)
+                    tar xvfj $1
+                    cd -- $(basename "$1" .tar.bz2)
+                ;;
+                *.tar.lrz)
+                    lrztar -d $1
+                    cd -- $(basename "$1" .tar.lrz)
+                ;;
+                *.tar.gz)
+                    tar xvfz $1
+                    cd -- $(basename "$1" .tar.gz)
+                ;;
+                *.tar.xz)
+                    tar xvfJ $1
+                    cd -- $(basename "$1" .tar.xz)
+                ;;
+                *.bz2)
+                    bunzip2 $1
+                    cd -- $(basename "$1" .bz2)
+                ;;
+                *.lrz)
+                    lrunzip $1
+                    cd -- $(basename "$1" .lrz)
+                ;;
+                *.gz)
+                    gunzip $1
+                    cd -- $(basename "$1" .gz)
+                ;;
+                *.xz)
+                    unxz $1
+                    cd -- $(basename "$1" .xz)
+                ;;
+                *.lzma)
+                    unlzma $1
+                    cd -- $(basename "$1" .lzma)
+                ;;
+                *.rar)
+                    unrar x -ad $1
+                    cd -- $(basename "$1" .rar)
+                ;;
+                *.tar)
+                    tar xvf $1
+                    cd -- $(basename "$1" .tar)
+                ;;
+                *.tgz)
+                    tar xvfz $1
+                    cd -- $(basename "$1" .tgz)
+                ;;
+                *.tbz2)
+                    tar xvfj $1
+                    cd -- $(basename "$1" .tbz2)
+                ;;
+                *.zip)
+                    unzip $1
+                    cd -- $(basename "$1" .zip)
+                ;;
+                *.Z)
+                    uncompress $1
+                    cd -- $(basename "$1" .Z)
+                ;;
+                *.7z)
+                    7z x $1
+                    cd -- $(basename "$1" .7z)
+                ;;
+                *.exe)
+                    cabextract $1
+                    cd -- $(basename "$1" .exe)
+                ;;
+                *.deb)
+                    ar p $1 data.tar.xz | unxz | tar x
+                ;;
+                *.rpm)
+                    rpm2cpio mypackage.rpm | cpio -vid
+                ;;
+                *.ecm)
+                    ecm-uncompress $1
+                    cd -- $(basename "$1" .ecm)
+                ;;
+                #*.)
+                    #$1
+                    #cd -- $(basename "$1" .)
+                #;;
+                *)
+                    error="1"
+                    echo " x: '$1'  -  unknown archive format."
+                ;;
+            esac
+            [[ ${error} != '1' ]] && mv -i $1 /tmp/
+        else
+            echo " x: '$1'  -  file does not exist."
+        fi
+    fi
+}
+
+## 
+##----------------------------------------------------------------------------------------
+
+
+##  prompt and other behaviour
+##----------------------------------------------------------------------------------------
+
+##  source syntax highlighting
+ZSHSYNHL="/usr/share/zsh/plugins/zsh-syntax-highlighting"
+[[ -s ${ZSHSYNHL}/zsh-syntax-highlight.zsh ]] && \
+    source ${ZSHSYNHL}/zsh-syntax-highlight.zsh && \
+    ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+##  source external profile options
+ZSHDOTS="${HOME}/.config/etc/dotfiles/zsh"
+[[ -s ${ZSHDOTS}/zprofile ]] && \
+    source ${ZSHDOTS}/zprofile
+
+##  source external environment options
+[[ -s ${ZSHDOTS}/zenv ]] && \
+    source ${ZSHDOTS}/zenv
+
+##  source external aliases options
+[[ -s ${ZSHDOTS}/zaliases ]] && \
+    source ${ZSHDOTS}/zaliases
+
+##  source external functions options
+[[ -s ${ZSHDOTS}/zfunctions ]] && \
+    source ${ZSHDOTS}/zfunctions
+
+##  source the git prompt
+[[ -s ${ZSHDOTS}/plugins/git-prompt/vcs_prompt ]] && \
+    source ${ZSHDOTS}/plugins/git-prompt/vcs_prompt
+
+ # temporary
+source /home/ygoreus/gitstuff/clone/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+##  color prompt based on user
+RPROMPT=""
+PROMPT=""
+if [[ $USER == 'root' ]]; then
+    ## print username and hostname
+    PROMPT+=$'%{\e[0;31m%}%n%{\e[1;30m%}@%{\e[1;34m%}%M %{\e[0m%}'
+    ## if in a vcs directory show vcs status
+    RPROMPT+='$(git_super_status)'
+    ## go to a new line
+    PROMPT+=$'\n'
+    ## show working directory and command interface
+    PROMPT+=$' %{\e[1;34m%}%2~%{\e[0m%}'
+    ## change prompt if in linux console
+    [[ -n $DISPLAY ]] && \
+        PROMPT+=$'%{\e[1;32m%}  %{\e[0m%}' || \
+        PROMPT+=$'%{\e[1;32m%} > %{\e[0m%}'
+else
+    ## print username and hostname
+    PROMPT+=$'%{\e[0;36m%}%n%{\e[1;30m%}@%{\e[1;34m%}%M %{\e[0m%}'
+    ## if in a vcs directory show vcs status
+    RPROMPT+='$(git_super_status)'
+    ## go to a new line
+    PROMPT+=$'\n'
+    ## show working directory and command interface
+    PROMPT+=$' %{\e[1;34m%}%2~%{\e[0m%}'
+    ## change prompt if in linux console
+    [[ -n $DISPLAY ]] && \
+        PROMPT+=$'%{\e[1;32m%}  %{\e[0m%}' || \
+        PROMPT+=$'%{\e[1;32m%} > %{\e[0m%}'
+fi
+
+##  start behaviour
+[[ -z $DISPLAY ]] && \
+    clear && cat /etc/start.issue
+

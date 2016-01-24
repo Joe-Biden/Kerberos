@@ -1,0 +1,41 @@
+##  window rules
+##----------------------------------------------------------------------------------------
+
+##  set default window rules
+for_window [class="^.*$"] title_format "<b>  </b> %title "
+for_window [class="^.*$"] tiling enable border pixel 1
+
+##  specify program layout
+for_window [class="^(?i)lxappearance$"]                     floating enable
+for_window [class="^(?i)thunar$|^(?i)pcmanfm$"]             floating enable
+for_window [class="^(?i)pavucontrol$"]                      floating enable
+for_window [class="^(?i)urxvt$" title="Audio Mixer"]        floating enable
+for_window [class="^(?i)xcalc$|^(?i)galculator$"]           floating enable
+for_window [class="^(?i)engrampa$|^(?i)xarchiver$"]         floating enable
+for_window [class="^(?i)ftjerm$"]                           fullscreen enable
+for_window [class="^(?i)feh$" title="Change Wallpaper"]     fullscreen enable
+for_window [window_type="dialog"]                           floating enable
+for_window [window_type="menu"]                             floating enable
+for_window [window_type="pop-up"]                           floating enable
+
+##  assign programs to specific tags
+assign [class="^(?i)google-chrome$"]    → $tag1
+assign [class="^(?i)chromium$"]         → $tag1
+assign [class="^(?i)luakit$"]           → $tag1
+assign [class="^(?i)dwb$"]              → $tag1
+assign [class="^(?i)qutebrowser$"]      → $tag1
+assign [class="^(?i)gimp$"]             → $tag5
+assign [class="^(?i)mpv$"]              → $tag9
+
+##  assign tags to specific monitors
+workspace $tag0 output $screen1
+workspace $tag1 output $screen2
+workspace $tag2 output $screen1
+workspace $tag3 output $screen1
+workspace $tag4 output $screen1
+workspace $tag5 output $screen3
+workspace $tag6 output $screen3
+workspace $tag7 output $screen3
+workspace $tag8 output $screen3
+workspace $tag9 output $screen2
+

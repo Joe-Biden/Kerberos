@@ -1,0 +1,513 @@
+##----------------------------------------------------------------------------------------
+##-- Author   Joe Biden aka ygr                                                        --
+##-- Dotfile  ${HOME}/.i3/config                                                       --
+##-- vim: set nu ai et ts=4 sw=4 ft=i3 syn=i3 :                                         --
+##----------------------------------------------------------------------------------------
+
+##  Set Variables
+##----------------------------------------------------------------------------------------
+
+##  Mod keys
+set $mod Mod1
+set $sup Mod4
+set $ctl Control
+set $sft Shift
+
+##  output screens - sys76-lemur
+set $screen1 eDP1
+set $screen2 eDP1
+set $screen3 eDP1
+
+##  workspace theme - ygr
+set $tag0  "1:  "
+set $tag1  "2:  "
+set $tag2  "3:  "
+set $tag3  "4:  "
+set $tag4  "5:  "
+set $tag5  "6:  "
+set $tag6  "7:  "
+set $tag7  "8:  "
+set $tag8  "9:  "
+set $tag9 "10:  "
+
+##  window theme - ygr
+ ## focused client
+set $FCo #839469
+set $FCb #839496
+set $FCt #00252e
+set $FCi #00252e
+ ## unfocused client
+set $UCo #00252e
+set $UCb #00252e
+set $UCt #839496
+set $UCi #839496
+ ## focused_inactive client
+set $ICo #00252e
+set $ICb #00252e
+set $ICt #839496
+set $ICi #00252e
+ ## urgent client
+set $CCo #e59847
+set $CCb #e59847
+set $CCt #00252e
+set $CCi #839496
+ ## placeholder client
+set $PCo #839496
+set $PCb #839496
+set $PCt #839496
+set $PCi #839496
+ ## background client
+set $CLb #ffffff
+
+##  status bar theme - ygr
+ ## misc colours
+set $stl #26cece
+set $sep #aaaaaa
+set $bkd #000000
+ ## focused workspace
+set $FWo #000000
+set $FWb #000000
+set $FWt #2e9afe
+ ## active workspace
+set $AWo #000000
+set $AWb #000000
+set $AWt #696f89
+ ## inactive workspace
+set $IWo #000000
+set $IWb #000000
+set $IWt #696f89
+ ## urgent workspace
+set $UWo #000000
+set $UWb #000000
+set $UWt #bf3f34
+ ## binding mode
+set $BMo #d91c07
+set $BMb #d91c07
+set $BMt #cccccc
+
+##  program options
+set $FJ      /usr/bin/firejail
+set $CB      /usr/bin/st -t 'Web Browse' -e w3m 'www.duckduckgo.com'
+set $GC      /opt/google/chrome/google-chrome --password-store=basic --cipher-suite-blacklist=0x0033,0x0039,0x009E,0xcc15,0x0001,0x0002,0x0004,0x0005,0x0017,0x0018,0xc002,0xc007,0xc00c,0xc011,0xc016,0xff80,0xff81,0xff82,0xff83 --flag-switches-begin --enable-tab-audio-muting --disable-device-discovery-notifications --flag-switches-end
+set $IC      /opt/google/chrome/google-chrome --incognito --password-store=basic --cipher-suite-blacklist=0x0033,0x0039,0x009E,0xcc15,0x0001,0x0002,0x0004,0x0005,0x0017,0x0018,0xc002,0xc007,0xc00c,0xc011,0xc016,0xff80,0xff81,0xff82,0xff83 --flag-switches-begin --enable-tab-audio-muting --disable-device-discovery-notifications --flag-switches-end
+set $Netflix /opt/google/chrome/google-chrome --password-store=basic --cipher-suite-blacklist=0x0033,0x0039,0x009E,0xcc15,0x0001,0x0002,0x0004,0x0005,0x0017,0x0018,0xc002,0xc007,0xc00c,0xc011,0xc016,0xff80,0xff81,0xff82,0xff83 --flag-switches-begin --enable-tab-audio-muting --disable-device-discovery-notifications --flag-switches-end --app=https://www.netflix.com/
+
+##  user scripts & binaries
+set $signal         "${HOME}/.config/etc/dotfiles/bin/signal"
+set $volume         "${HOME}/.config/etc/dotfiles/bin/volume"
+set $backlight      "${HOME}/.config/etc/dotfiles/bin/backlight"
+set $wifi           "${HOME}/.config/etc/dotfiles/bin/wifi"
+set $trackpad       "${HOME}/.config/etc/dotfiles/bin/trackpad"
+set $wallpaper      "${HOME}/.config/etc/dotfiles/bin/wallpaper"
+set $i3Exit         "${HOME}/.config/etc/dotfiles/bin/i3exit"
+set $bartoggle      "${HOME}/.config/etc/dotfiles/bin/i3-bar-toggle"
+set $themeswitcher  "${HOME}/.config/etc/dotfiles/bin/gui-theme-switcher"
+
+##  general options
+##----------------------------------------------------------------------------------------
+
+##  set font and markup for the window manager
+font pango:Hermit, Fontawesome 14px
+
+##  set floating modifier
+floating_modifier $mod
+
+##  return to previous workspace when switching to current tag
+workspace_auto_back_and_forth yes
+
+##  floating window min / max size
+floating_minimum_size 90 x 60
+floating_maximum_size 1600 x 900
+
+##  misc options
+focus_follows_mouse yes¬
+force_display_urgency_hint 500 ms
+
+##  new window attributes
+new_window pixel 1
+new_float pixel 0
+hide_edge_borders both
+
+##  window gaps
+gaps inner 5
+gaps outer 5
+smart_gaps on
+
+##  binding modes
+##----------------------------------------------------------------------------------------
+
+##  resize window mode
+set $mode_resize   Resize Window
+mode "$mode_resize" {
+    ## use arrow keys to resize window
+    bindsym Left  resize shrink width  5 px
+    bindsym Up    resize grow   height 5 px
+    bindsym Down  resize shrink height 5 px
+    bindsym Right resize grow   width  5 px
+    ## use vim keys to resize window, we're not animals we live in a society
+    bindsym h resize shrink width  5 px
+    bindsym j resize grow   height 5 px
+    bindsym k resize shrink height 5 px
+    bindsym l resize grow   width  5 px
+    ## use arrow keys to resize window more
+    bindsym Shift+Left  resize shrink width  25 px
+    bindsym Shift+Up    resize grow   height 25 px
+    bindsym Shift+Down  resize shrink height 25 px
+    bindsym Shift+Right resize grow   width  25 px
+    ## use vim keys to resize window more, again not animals.. society..
+    bindsym Shift+h resize shrink width  25 px
+    bindsym Shift+j resize grow   height 25 px
+    bindsym Shift+k resize shrink height 25 px
+    bindsym Shift+l resize grow   width  25 px
+    ## return to / escape to normal mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+##  move window mode
+set $mode_moveit   Move Window
+mode "$mode_move" {
+    ## use arrow keys to move window
+    bindsym Left  move left  5 px
+    bindsym Up    move up    5 px
+    bindsym Down  move down  5 px
+    bindsym Right move right 5 px
+    ## use vim keys to move window, we're not animals we live in a society
+    bindsym h move left  5 px
+    bindsym j move down  5 px
+    bindsym k move up    5 px
+    bindsym l move right 5 px
+    ## use arrow keys to move window more
+    bindsym Shift+Left  move left  25 px
+    bindsym Shift+Up    move up    25 px
+    bindsym Shift+Down  move down  25 px
+    bindsym Shift+Right move right 25 px
+    ## use vim keys to move window more, again not animals.. society..
+    bindsym Shift+h move left  25 px
+    bindsym Shift+j move down  25 px
+    bindsym Shift+k move up    25 px
+    bindsym Shift+l move right 25 px
+    ## center window
+    bindsym c move absolute position center
+    ## return to / escape to normal mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+##  session mode
+set $mode_sessionmgr   Leave    
+mode "$mode_power" {
+    ## exit options
+    bindsym $sft+l exec --no-startup-id /usr/bin/env sh $i3Exit lock; mode "default"
+    bindsym $sft+s exec --no-startup-id /usr/bin/env sh $i3Exit suspend; mode "default"
+    bindsym $sft+h exec --no-startup-id /usr/bin/env sh $i3Exit hibernate; mode "default"
+    bindsym $sft+e exec --no-startup-id /usr/bin/env sh $i3Exit exit; mode "default"
+    bindsym $sft+r exec --no-startup-id /usr/bin/env sh $i3Exit restart; mode "default"
+    bindsym $sft+q exec --no-startup-id /usr/bin/env sh $i3Exit poweroff; mode "default"
+    ## return to / escape to normal mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+##  change gaps
+set $mode_gaps Gaps: (o) outer, (i) inner
+mode "$mode_gaps" {
+    ## enter gap altering mode
+    bindsym o      mode "$mode_gaps_outer"
+    bindsym i      mode "$mode_gaps_inner"
+    ## return to / escape to normal mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+##  change inner gaps
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+mode "$mode_gaps_inner" {
+    ## alter gaps by a small amount
+    bindsym plus  gaps inner current plus 5
+    bindsym minus gaps inner current minus 5
+    bindsym 0     gaps inner current set 0
+    ## alter gaps by a large amount
+    bindsym Shift+plus  gaps inner all plus 5
+    bindsym Shift+minus gaps inner all minus 5
+    bindsym Shift+0     gaps inner all set 0
+    ## return to / escape to normal mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+##  change outer gaps
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+mode "$mode_gaps_outer" {
+    ## alter gaps by a small amount
+    bindsym plus  gaps outer current plus 5
+    bindsym minus gaps outer current minus 5
+    bindsym 0     gaps outer current set 0
+    ## alter gaps by a large amount
+    bindsym Shift+plus  gaps outer all plus 5
+    bindsym Shift+minus gaps outer all minus 5
+    bindsym Shift+0     gaps outer all set 0
+    ## return to / escape to normal mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+##  window rules
+##----------------------------------------------------------------------------------------
+
+##  set default window rules
+for_window [class="^.*$"] title_format "<b>  </b> %title "
+for_window [class="^.*$"] tiling enable border pixel 1
+
+##  specify program layout
+for_window [class="^(?i)lxappearance$"]                     floating enable
+for_window [class="^(?i)thunar$|^(?i)pcmanfm$"]             floating enable
+for_window [class="^(?i)pavucontrol$"]                      floating enable
+for_window [class="^(?i)urxvt$" title="Audio Mixer"]        floating enable
+for_window [class="^(?i)xcalc$|^(?i)galculator$"]           floating enable
+for_window [class="^(?i)engrampa$|^(?i)xarchiver$"]         floating enable
+for_window [class="^(?i)ftjerm$"]                           fullscreen enable
+for_window [class="^(?i)feh$" title="Change Wallpaper"]     fullscreen enable
+for_window [window_type="dialog"]                           floating enable
+for_window [window_type="menu"]                             floating enable
+for_window [window_type="pop-up"]                           floating enable
+
+##  assign programs to specific tags
+assign [class="^(?i)google-chrome$"]    → $tag1
+assign [class="^(?i)chromium$"]         → $tag1
+assign [class="^(?i)luakit$"]           → $tag1
+assign [class="^(?i)dwb$"]              → $tag1
+assign [class="^(?i)qutebrowser$"]      → $tag1
+assign [class="^(?i)gimp$"]             → $tag5
+assign [class="^(?i)mpv$"]              → $tag9
+
+##  assign tags to specific monitors¬
+workspace $tag0 output $screen1
+workspace $tag1 output $screen2
+workspace $tag2 output $screen1
+workspace $tag3 output $screen1
+workspace $tag4 output $screen1
+workspace $tag5 output $screen3
+workspace $tag6 output $screen3
+workspace $tag7 output $screen3
+workspace $tag8 output $screen3
+workspace $tag9 output $screen2
+
+##  keybindings  windows
+##----------------------------------------------------------------------------------------
+
+##  use vim keys to change focused container, we're not animals we live in a society
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+##  use vim keys to move focused container, again not animals.. society..
+bindsym $mod+$sft+h move left
+bindsym $mod+$sft+j move down
+bindsym $mod+$sft+k move up
+bindsym $mod+$sft+l move right
+
+##  use arrow keys to change focused container
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+##  use arrow keys to move focused container
+bindsym $mod+$sft+Left  move left
+bindsym $mod+$sft+Down  move down
+bindsym $mod+$sft+Up    move up
+bindsym $mod+$sft+Right move right
+
+##  change container layout
+bindsym $mod+s stacked
+bindsym $mod+w tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen toggle
+
+##  focus the parent / child container
+bindsym $mod+a      focus parent
+bindsym $mod+$sft+a focus child
+
+##  change new window split orientation¬
+bindsym $sup+h split h
+bindsym $sup+v split v
+
+##  floating windows
+bindsym $mod+$sft+space floating toggle
+bindsym $mod+space      focus mode_toggle
+
+##  i3 system actions upgrade, restart, etc
+bindsym $mod+c      reload
+bindsym $mod+r      restart
+bindsym $mod+$sft+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
+
+##-- keybindings  workspace
+##----------------------------------------------------------------------------------------
+
+##  workspace back and forth
+bindsym $mod+b      workspace back_and_forth
+bindsym $mod+$sft+b move container to workspace back_and_forth; workspace back_and_forth
+
+##  navigate workspaces
+bindsym $mod+$ctl+comma  workspace prev
+bindsym $mod+$ctl+Left   workspace prev
+bindsym $mod+$sft+Tab    workspace prev
+bindsym $mod+$ctl+period workspace next
+bindsym $mod+$ctl+Right  workspace next
+bindsym $mod+Tab         workspace next
+
+##  change to workspace
+bindsym $mod+1 workspace $tag0
+bindsym $mod+2 workspace $tag1
+bindsym $mod+3 workspace $tag2
+bindsym $mod+4 workspace $tag3
+bindsym $mod+5 workspace $tag4
+bindsym $mod+6 workspace $tag5
+bindsym $mod+7 workspace $tag6
+bindsym $mod+8 workspace $tag7
+bindsym $mod+9 workspace $tag8
+bindsym $mod+0 workspace $tag9
+
+##  move focused to container to workspace
+bindsym $mod+Shift+1 move container to workspace $tag0
+bindsym $mod+Shift+2 move container to workspace $tag1
+bindsym $mod+Shift+3 move container to workspace $tag2
+bindsym $mod+Shift+4 move container to workspace $tag3
+bindsym $mod+Shift+5 move container to workspace $tag4
+bindsym $mod+Shift+6 move container to workspace $tag5
+bindsym $mod+Shift+7 move container to workspace $tag6
+bindsym $mod+Shift+8 move container to workspace $tag7
+bindsym $mod+Shift+9 move container to workspace $tag8
+bindsym $mod+Shift+0 move container to workspace $tag9
+
+##  move and follow focused container to workspace
+bindsym $sup+Shift+1 move container to workspace $tag0; workspace $tag0
+bindsym $sup+Shift+2 move container to workspace $tag1; workspace $tag1
+bindsym $sup+Shift+3 move container to workspace $tag2; workspace $tag2
+bindsym $sup+Shift+4 move container to workspace $tag3; workspace $tag3
+bindsym $sup+Shift+5 move container to workspace $tag4; workspace $tag4
+bindsym $sup+Shift+6 move container to workspace $tag5; workspace $tag5
+bindsym $sup+Shift+7 move container to workspace $tag6; workspace $tag6
+bindsym $sup+Shift+8 move container to workspace $tag7; workspace $tag7
+bindsym $sup+Shift+9 move container to workspace $tag8; workspace $tag8
+bindsym $sup+Shift+0 move container to workspace $tag9; workspace $tag9
+
+##-- keybindings  programs
+##----------------------------------------------------------------------------------------
+
+##  open a terminal
+bindsym $mod+Return exec --no-startup-id /usr/bin/st
+bindsym $mod+$sft+Return exec --no-startup-id /usr/bin/st -t 'stf'
+bindsym Menu        exec --no-startup-id /usr/bin/urxvtc
+
+##  open the menu
+bindsym $mod+d exec --no-startup-id /usr/bin/dmenu_run -q -o 0.8 -p '  '
+
+##  open a web browser
+bindsym $sup+w      exec --no-startup-id $GC
+bindsym $sup+$sft+w exec --no-startup-id $IC
+bindsym $sup+$mod+w exec --no-startup-id $CB
+
+##  function key behaviour
+bindsym XF86ScreenSaver    exec --no-startup-id /usr/bin/env sh $i3exit lock
+bindsym XF86Sleep          exec --no-startup-id /usr/bin/env sh $i3exit suspend
+bindsym XF86Suspend        exec --no-startup-id /usr/bin/env sh $i3exit hibernate
+bindsym XF86TouchpadToggle exec --no-startup-id /usr/bin/env sh $trackpad
+
+##  volume keybindings
+bindsym XF86AudioMute             exec --no-startup-id /usr/bin/env sh $volume toggle
+bindsym XF86AudioRaiseVolume      exec --no-startup-id /usr/bin/env sh $volume up 4
+bindsym XF86AudioLowerVolume      exec --no-startup-id /usr/bin/env sh $volume down 4
+bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id /usr/bin/env sh $volume up 12
+bindsym $mod+XF86AudioLowerVolume exec --no-startup-id /usr/bin/env sh $volume down 12
+
+##  multimedia keys
+bindsym XF86AudioPlay exec --no-startup-id /usr/bin/mpc toggle
+bindsym XF86AudioPrev exec --no-startup-id /usr/bin/mpc prev
+bindsym XF86AudioNext exec --no-startup-id /usr/bin/mpc next
+bindsym XF86AudioStop exec --no-startup-id /usr/bin/mpc stop
+
+##  backlight keybindings
+bindsym XF86MonBrightnessUp        exec --no-startup-id /usr/bin/env sh $backlight up 4
+bindsym XF86MonBrightnessDown      exec --no-startup-id /usr/bin/env sh $backlight down 4
+bindsym $mod+XF86MonBrightnessUp   exec --no-startup-id /usr/bin/env sh $backlight standard
+bindsym $mod+XF86MonBrightnessDown exec --no-startup-id /usr/bin/env sh $backlight off
+
+##  invoke binding modes
+bindsym $mod+r      mode "$mode_resize"
+bindsym $mod+$sft+g mode "$mode_gaps"
+bindsym $mod+$sft+m mode "$mode_moveit"
+bindsym $mod+$sft+x mode "$mode_sessionmgr"
+
+##  toggle the status bar
+bindsym $mod+m exec --no-startup-id /usr/bin/env sh $bartoggle
+
+##  scratchpad keybindings
+bindsym $mod+minus      scratchpad show
+bindsym $mod+$sft+minus move scratchpad
+
+##  sticky window keybindings
+bindsym $mod+$sft+z     sticky toggle
+
+##-- window theme and status bar
+##----------------------------------------------------------------------------------------
+
+##  window theme
+ ## colourclass            border      background  text        indicator
+client.focused             $FCo        $FCb        $FCt        $FCi
+client.unfocused           $UCo        $UCb        $UCt        $UCi
+client.focused_inactive    $ICo        $ICb        $ICt        $ICi
+client.urgent              $CCo        $CCb        $CCt        $CCi
+client.placeholder         $PCo        $PCb        $PCt        $PCi
+client.background                      $CLb
+
+##  status bar
+bar {
+    height 22
+    separator_symbol " "
+    status_command i3blocks
+    font xft:Hermit, Symbola, FontAwesome 10px
+    position top
+    mode invisible
+    modifier $ctl
+    workspace_buttons yes
+    strip_workspace_numbers yes
+    binding_mode_indicator yes
+    tray_output primary
+    tray_padding 0
+    colors {
+            statusline         $stl
+            separator          $sep
+            background         $bkd
+            ##      class      border      background  text
+            focused_workspace  $FWo        $FWb        $FWt
+            active_workspace   $AWo        $AWb        $AWt
+            inactive_workspace $IWo        $IWb        $IWt
+            urgent_workspace   $UWo        $UWb        $UWt
+            binding_mode       $BMo        $BMb        $BMt
+    }
+}
+
+##-- autostart programs
+##----------------------------------------------------------------------------------------
+
+##  start the urxvt daemon
+exec --no-startup-id /usr/bin/urxvtd -q -o -f
+
+##  start ftjerm dropdown terminal
+exec --no-startup-id /usr/bin/ftjerm
+
+##  mute system when i3 starts
+exec --no-startup-id /usr/bin/env sh $volume mute
+
+##  start the compositor, works good enough
+exec --no-startup-id /usr/bin/compton -b --config $HOME/.etc/compton.conf
+
+##  set wallpaper to previous session
+exec --no-startup-id /usr/bin/env sh $HOME/.fehbg
+
+##  automagically change wallpaper every 30 minutes
+#exec --no-startup-id /usr/bin/env sh $HOME/.etc/dotfiles/bin/wallpaper_auto
+

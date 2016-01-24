@@ -1,0 +1,36 @@
+## vim: set nu ai et ts=4 sw=4 syn=sh :
+
+## properly source xinit
+if [[ -d /etc/X11/xinit/xinitrc.d ]]; then
+    for f in /etc/X11/xinit/xinitrc.d/*; do
+        [[ -x $f ]] && . "$f"
+    done
+    unset f
+fi
+
+## load existing resources
+usrxres="${HOME}/.Xresources"
+ssyxres="/etc/X11/xinit/.Xresources"
+usrxmap="${HOME}/.Xmodmap"
+sysxmap="/etc/X11/xinit/.Xmodmap"
+
+[[ -s $usrxres ]] && xrdb -merge $usrxres
+[[ -s $usrxmap ]] && xmodmap $usrxmap
+[[ -s $sysxres ]] && xrdb -merge $sysxres
+[[ -s $sysxmap ]] && xmodmap $sysxmap
+
+## fix the s**t
+/usr/bin/unclutter 
+/usr/bin/setxkbmap -option terminate:ctrl_alt_bksp &
+/usr/bin/xsetroot -cursor_name left_ptr &
+
+
+
+## start existing programs
+/usr/bin/urxvtd -q -o -f
+
+
+## start window manager
+[[ -d '~/.config/.i3logs' ]] || mkdir -p ~/.config/.i3logs
+exec /usr/bin/i3 -V >> ~/.config/.i3-logs/i3log-$(date +'%F-%k-%M-%S') 2>&1
+

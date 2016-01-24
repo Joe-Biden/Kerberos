@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+##----------------------------------------------------------------------------------------
+##-- author   Joe Biden aka ygoreus                                                    --
+##-- version  0.1                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=zsh syn=sh :                                        --
+##----------------------------------------------------------------------------------------
+
+
+## initialize variables
+index="wifi"
+sb=`awk '/Soft/ {print $3}' <(rfkill list ${index})`
+[[ ${sb} == "no" ]] && act="0" || act="1"
+
+## do the stuff
+case ${act} in
+    0) rfkill block ${index} ;;
+    1) rfkill unblock ${index} ;;
+    *) exit 1 ;;
+esac

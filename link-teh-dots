@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+## vim: set nu ai et ts=4 sw=4 ft=sh syn=sh :
+
+##  variables
+dots="${HOME}/.config/etc/dotfiles"
+
+##  link binaries
+[[ -d ${dots}/bin ]] && \
+    ln -sf ${dots}/bin ${HOME}/bin
+
+##  link builds
+[[ -d ${dots}/builds ]] && \
+    ln -sf ${dots}/builds ${HOME}/builds
+
+
+##  link home dots
+ ## mydircolors
+[[ -s ${dots}/home/mydircolours ]] && \
+    ln -sf ${dots}/home/mydircolours ${HOME}/.mydircolours
+ ## Xresources
+[[ -s ${dots}/home/Xresources ]] && \
+    ln -sf ${dots}/home/Xresources ${HOME}/.Xresources
+ ## Xmodmap
+[[ -s ${dots}/home/Xmodmap ]] && \
+    ln -sf ${dots}/home/Xmodmap ${HOME}/.Xmodmap
+ ## compton
+[[ -s ${dots}/home/compton.conf ]] && \
+    ln -sf ${dots}/home/compton.conf ${HOME}/.compton.conf
+ ## profile
+[[ -s ${dots}/home/profile ]] && \
+    ln -sf ${dots}/home/profile ${HOME}/.profile
+ ## fonts
+[[ -d ${dots}/home/fonts ]] && \
+    ln -sf ${dots}/home/fonts ${HOME}/.fonts && \
+    fc-cache -f ${HOME}/.fonts
+ ## icons
+[[ -d ${dots}/home/icons/aDMZ ]] && \
+    ln -sf ${dots}/home/icons/aDMZ ${HOME}/.icons/aDMZ \
+    sudo cp -R ${dots}/home/icons/aDMZ /usr/share/icons/aDMZ
+[[ -d ${dots}/home/icons/ACYL ]] && \
+    ln -sf ${dots}/home/icons/ACYL ${HOME}/.icons/ACYL && \
+    sudo cp -R ${dots}/home/icons/ACYL /usr/share/icons/ACYL
+[[ -d ${dots}/home/icons/default ]] && \
+    ln -sf ${dots}/home/icons/default ${HOME}/.icons/default && \
+    sudo cp -R ${dots}/home/icons/default /usr/share/icons/default
+ ## theme
+[[ -d ${dots}/home/themes/ ]] && \
+    ln -sf ${dots}/home/themes/EOG ${HOME}/.themes/EOG
+
+##  link mail dots
+ ## fetchmail
+[[ -s ${dots}/mutt/fetchmailrc ]] && \
+    ln -sf ${dots}/mutt/fetchmailrc ${HOME}/.fetchmailrc
+ ## procmail
+[[ -s ${dots}/mutt/procmailrc ]] && \
+    ln -sf ${dots}/mutt/procmailrc ${HOME}/.procmailrc
+ ## muttrc
+
+##  link mpd dots
+[[ -d ${dots}/mpd/mpd ]] && \
+    ln -sf ${dots}/mpd/mpd ${HOME}/.mpd
+
+[[ -d ${dots}/mpd/ncmpcpp ]] && \
+    ln -sf ${dots}/mpd/ncmpcpp ${HOME}/.ncmpcpp
+
+##  link i3 dots
+[[ -d ${dots}/i3 ]] && \
+    ln -sf ${dots}/i3 ${HOME}/.i3
+
+##  link dwm dots
+[[ -d ${dots}/dwm ]] && \
+    ln -sf ${dots}/dwm ${HOME}/.dwm
+
+
+##  link vim dots
+[[ -d ${dots}/vim ]] && \
+    ln -sf ${dots}/vim ${HOME}/.vim
+
+[[ -s ${dots}/vim/vimrc ]] && \
+    ln -sf ${dots}/vim/vimrc ${HOME}/.vimrc
+
+
+##  link nano dots
+[[ -d ${dots}/nano ]] && \
+    ln -sf ${dots}/nano ${HOME}/.nano
+
+[[ -s ${dots}/nano/nanorc ${HOME}/.nanorc ]] && \
+    ln -sf ${dots}/nano/nanorc ${HOME}/.nanorc
+
+##  link rtorrent dots
+[[ -d ${dots}/rtorrent ]] && \
+    ln -sf ${dots}/rtorrent ${HOME}/.rtorrent
+
+[[ -s ${dots}/rtorrent/rtorrentrc ]] && \
+    ln -sf ${dots}/rtorrent/rtorrentrc ${HOME}/.rtorrent.rc
+
+##  link tmux dots
+[[ -d ${dots}/tmux ]] && \
+    ln -sf ${dots}/tmux ${HOME}/.tmux
+
+
+##  link zsh dots
+[[ -d ${dots}/zsh ]] && \
+    ln -sf ${dots}/zsh ${HOME}/.zsh
+
+[[ -s ${dots}/zsh/zshrc ]] && \
+    ln -sf ${dots}/zsh/zshrc ${HOME}/.zshrc
+
+
+##  copy etc dots
+[[ -s ${dots}/etc/pacman.conf ]] && \
+    sudo cp /etc/pacman.conf /etc/default/pacman.conf && \
+    sudo ln -sf ${dots}/etc/pacman.conf /etc/pacman.conf
+
+[[ -s ${dots}/etc/crypto-issue ]] && \
+    sudo ln -sf ${dots}/etc/crypto-issue /etc/crypto-issue
+
+[[ -s ${dots}/etc/issue ]] && \
+    sudo cp /etc/issue /etc/default/issue && \
+    sudo ln -sf ${dots}/etc/issue /etc/issue
+
+[[ -s ${dots}/etc/syslinux/syslinux.cfg ]] && \
+    sudo cp /boot/syslinux/syslinux.cfg /etc/default/syslinux.cfg && \
+    sudo ln -sf ${dots}/etc/syslinux/syslinux.cfg /boot/syslinux/syslinux.cfg
+
+[[ -s ${dots}/etc/systemd-boot/loader.conf ]] && \
+    sudo chown root:root ${dots}/etc/systemd-boot/loader.conf && \
+    sudo ln -sf ${dots}/etc/systemd-boot/loader.conf /boot/EFI/loader/loader.conf
+
+[[ -s ${dots}/etc/systemd-boot/kerberus-ygr.conf ]] && \
+    sudo ln -sf ${dots}/etc/systemd-boot/kerberus-ygr.conf /boot/EFI/loader/entries/kerberus-ygr.conf
+
+[[ -s ${dots}/etc/systemd-boot/kerberus-zen.conf ]] && \
+    sudo ln -sf ${dots}/etc/systemd-boot/kerberus-zen.conf /boot/EFI/loader/entries/kerberus-zen.conf
+
+[[ -s ${dots}/etc/systemd-boot/kerberus-mainline.conf ]] && \
+    sudo ln -sf ${dots}/etc/systemd-boot/kerberus-mainline.conf /boot/EFI/loader/entries/kerberus-mainline.conf
+
+[[ -s ${dots}/etc/systemd-boot/kerberus-live.conf ]] && \
+    sudo ln -sf ${dots}/etc/systemd-boot/kerberus-live.conf /boot/EFI/loader/entries/kerberus-live.conf
+
+
+
+

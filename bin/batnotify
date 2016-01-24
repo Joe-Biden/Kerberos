@@ -1,0 +1,29 @@
+#!/usr/bin/env zsh
+##----------------------------------------------------------------------------------------
+##-- author   Joe Biden aka ygoreus                                                    --
+##-- version  0.1                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=sh syn=sh :                                         --
+##----------------------------------------------------------------------------------------
+
+## set variables
+interval="300"
+crit="10"
+alrml="35"
+alrmu="85"
+icon=""
+nargs=( -a "Battery Monitor" -u critical -t 3000 )
+nuargs=( -a "Battery Monitor" -u normal -t 3000 )
+
+## do stuff
+while true; do
+    if [[ $(awk '/on/ {print $3}' <(acpi -a)) != 'on-line' ]]; then
+        batlvl=`awk '/%/ {gsub(/%,/,"") ; print $4}' <(acpi -b)`
+        [[ ${batlvl} -le ${alrml} && ${batlvl} -gt ${crit} ]] && notify-send "${nargs[@]}" "Battery has reached ${batlvl}%."
+        [[ ${batlvl} -le ${crit} ]] && notify-send "${nargs[@]}" "Battery has reached ${batlvl}%, get to the charger!"
+    fi
+    if [[ $(awk '/on/ {print $3}' <(acpi -a)) == 'on-line' ]]; then
+        batlvl=`awk '/%/ {gsub(/%,/,"") ; print $4}' <(acpi -b)`
+        [[ ${batlvl} -gt ${alrmu} ]] && notify-send "${nuargs[@]}" "Battery has reached ${batlvl}%, charge ist gut!"
+    fi
+    sleep ${interval}
+done

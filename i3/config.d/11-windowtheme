@@ -1,0 +1,29 @@
+##  window theme - ygr
+# focused client
+set $FCo #839469
+set $FCb #839496
+set $FCt #00252e
+set $FCi #00252e
+# unfocused client
+set $UCo #00252e
+set $UCb #00252e
+set $UCt #839496
+set $UCi #839496
+# focused_inactive client
+set $ICo #00252e
+set $ICb #00252e
+set $ICt #839496
+set $ICi #00252e
+# urgent client
+set $CCo #e59847
+set $CCb #e59847
+set $CCt #00252e
+set $CCi #839496
+# placeholder client
+set $PCo #839496
+set $PCb #839496
+set $PCt #839496
+set $PCi #839496
+# background client
+set $CLb #ffffff
+

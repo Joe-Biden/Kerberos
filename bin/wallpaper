@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+##----------------------------------------------------------------------------------------
+##-- author   Joe Biden aka ygoreus                                                    --
+##-- version  0.1                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=sh syn=sh :                                         --
+##----------------------------------------------------------------------------------------
+
+## initialize variables
+scrw=`awk '/current/ {gsub(/,/,"") ; print $8}' <(xrandr --query)`
+scrh=`awk '/current/ {gsub(/,/,"") ; print $10}' <(xrandr --query)`
+fargs=( -title "Change Wallpaper" -B black -g ${scrw}x${scrh} )
+actn1="feh --bg-scale %F && xdotool key Escape"
+dir="/home/${USER}/media/wallpaper/s1609"
+
+## wallpapers list
+file=$(basename -- "$(awk 'FNR==1 {print $1}' <(ls $dir))")
+arr=()
+shift
+cd -- ${dir}
+for i in *; do
+    [[ -f $i ]] || continue
+    arr+=("$i")
+    [[ $i == ${file} ]] && c=$((${#arr[@]} - 1 ))
+done
+
+## do the stuff
+exec feh "${fargs[@]}" --action1 ";""${actn1}" "$@" -- "${arr[@]:c}" "${arr[@]:0:c}"

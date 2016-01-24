@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+##----------------------------------------------------------------------------------------
+##-- author   Joe Biden aka ygoreus                                                    --
+##-- version  0.1                                                                      --
+##-- vim: set nu ai et ts=4 sw=4 ft=sh syn=sh :                                         --
+##----------------------------------------------------------------------------------------
+##-- toggles between gaps and no gaps, the things you do for a lady.
+
+## initialize variables
+configfile="${HOME}/.i3/config"
+gapsion=$(awk '/^gaps inner/' <(cat $configfile) | wc -l)
+gpasoon=$(awk '/^gaps outer/' <(cat $configfile) | wc -l)
+sgapson=$(awk '/^smart_gaps on/' <(cat $configfile) | wc -l)
+dis=$((gapsion + gapsoon + sgapson))
+initu=$(awk '/^gaps/' <(cat $configfile) | wc -l)
+initc=$(awk '/^#gaps/' <(cat $configfile) | wc -l)
+
+## initialize
+init_gaps() {
+    if [[ $initu == '0' ]] && [[ $intic == '0' ]]; then
+        echo -e "\ngaps inner 5\ngaps outer 0\nsmart_gaps on" >> $configfile
+    fi
+}
+
+## enable gaps
+enable_gaps() {
+    sed -i 's|^#gaps inner.*$|gaps inner 5|' $configfile
+    sed -i 's|^#gaps outer.*$|gaps outer 0|' $configfile
+    sed -i 's|^#smart_gaps.*$|smart_gaps on|' $configfile
+}
+
+## disable gaps
+disable_gaps() {
+    sed -i 's|^gaps inner.*$|#gaps inner 5|' $configfile
+    sed -i 's|^gaps outer.*$|#gaps outer 0|' $configfile
+    sed -i 's|^smart_gaps.*$|#smart_gaps on|' $configfile
+}
+
+## toggle
+init_gaps
+[[ $dis != '0' ]] && disable_gaps || enable_gaps
+i3-msg 'restart'
+

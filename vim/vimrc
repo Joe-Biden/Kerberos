@@ -1,0 +1,255 @@
+""----------------------------------------------------------------------------------------
+""-- Author   Joe Biden aka ygr                                                        --
+""-- Dotfile  ${HOME}/.vimrc                                                           --
+""-- vim: set nu ai et ts=4 sw=4 :                                                      --
+""----------------------------------------------------------------------------------------
+
+""  general options
+""----------------------------------------------------------------------------------------
+
+""  default file options
+set nocompatible
+set encoding=utf-8
+set fileformats=unix,dos,mac
+set formatoptions+=qrn1
+set shortmess+=I
+ "" specify vim settings within file
+set modeline
+ "" wrap long lines
+set wrap
+ "" no line numbers
+set nonumber
+set numberwidth=3
+ "" show cursor position
+set ruler
+ "" fix title
+set title
+set titlestring=%F title
+ "" highlight matching braces
+set showmatch
+ "" folding options
+"set foldenable
+"set foldcolumn=2
+"set foldmethod=marker
+"set foldtext=MyFoldText()
+ "" keep cursor in middle of the screen
+set scrolloff=999
+ "" avoid EX mode
+map Q <esc>
+set noexrc
+ "" disable error bells
+set noerrorbells
+set novisualbell
+set t_vb=
+ "" specify shell
+set shell=/usr/bin/zsh
+ "" fix backspace key
+set backspace=indent,eol,start
+ "" fix delete key
+"fixdel
+ "" use specific characters for white space
+set list lcs=tab:»\ ,trail:·,nbsp:_,extends:>,precedes:<,eol:¬
+ "" fix split behaviour
+set splitbelow
+set splitright
+
+""  search options
+ "" highlight search results
+set hlsearch
+ "" semi-intelligent shirt
+set incsearch
+set ignorecase
+set smartcase
+ "" toggle highlighted results
+set hlsearch!
+nnoremap <F3> :set hlsearch!<CR>
+
+""  default colour options
+set cursorline
+set nocursorcolumn
+ "" syntax highlighting
+syntax on
+ "" set colourscheme
+"set background=dark
+set t_Co=256
+ "" adjust colourscheme for linux console
+if &t_Co < 256
+    try
+        colorscheme miro8
+        catch
+    endtry
+else
+    try
+        colorscheme miromiro
+        catch
+    endtry
+endif
+
+""  temporary file options
+ "" undo options
+set undolevels=1000
+set writebackup
+set undofile
+set undodir=$HOME/.vim/tmp/undo//
+ "" backup options
+set backup
+set backupext='~'
+set backupdir=$HOME/.vim/tmp/backup//
+ "" swap options
+set swapfile
+set directory=$HOME/.vim/tmp/swp//
+
+""  misc options
+"set showcmd
+"set term=$TERM
+
+""  set file settings for various files
+ "" bootloader files
+au BufRead,BufNewFile kerberus-*.conf set nu ai et ts=4 sw=4
+au BufRead,BufNewFile loader.conf set nu ai et ts=4 sw=4
+ "" i3 config.d/*
+au BufRead,BufNewFile ${HOME}/.i3/config.d/* set nu ai et ts=4 sw=4 ft=i3 syn=i3
+ "" zsh config.d*
+"au BufRead,BufNewFile ${HOME}/.zsh/config.d/* set nu ai et ts=4 sw=4 ft=zsh syn=zsh
+
+""  custom keybinds
+ "" change command key
+nnoremap ; :
+nnoremap <leader>; ;
+ "" remap <del> to behave like x
+nnoremap <del> x
+ "" navigate splits
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+ "" source the vim config
+nnoremap <silent> <C-r> :source ~/.vimrc<CR>
+ "" change word to lower case
+nnoremap <C-x> guiw
+inoremap <C-x> <esc>guiwea
+ "" toggle between lower and upper case
+nnoremap <C-u> g~iw
+inoremap <C-u> <esc>g~iwea
+ "" o and O stay in normal mode
+nmap <S-CR> O<esc>
+nmap <CR> o<esc>
+ "" leader keybinds
+nmap <leader>w :w!<cr>
+ "" fix ctrl+s
+"unmap <C-s>
+"nmap <C-s> :w<cr>
+
+""  plugin options
+""----------------------------------------------------------------------------------------
+
+""  filtype plugins
+ "" detect filetype
+"set filetype=on
+"filetype plugin on
+"filetype indent on
+"set autoread
+ "" tabbing
+"set smarttab
+"set autoindent
+"set smartindent
+ "" whitespace
+"set softtabstop=4
+"set tabstop=4
+"set shiftwidth=4
+"set expandtab
+"set shiftround
+ "" spellchecker
+set nospell
+"set dictionary=${HOME}/.vim/spell/eng.utf-8.add
+
+
+""  nerdtree
+map <F2> <esc>:NERDTreeToggle<CR>
+
+""  airline
+set noshowmode
+ "" shorten update time (fixes the lag when leaving insert mode)
+set timeoutlen=50
+ "" statusline always on
+set laststatus=2
+ "" statusline look and feel
+let g:airline_powerline_fonts = 1
+let g:airline_theme='dark'
+ "" turn on tab line
+let g:airline#extensions#tabline#enabled = 1
+ "" shorten mode names
+let g:airline_mode_map = {
+    \ '__' : '-',
+    \ 'n'  : 'N',
+    \ 'i'  : 'I',
+    \ 'R'  : 'R',
+    \ 'c'  : 'C',
+    \ 'v'  : 'V',
+    \ 'V'  : 'VL',
+    \ '' : 'VB',
+    \ 's'  : 'S',
+    \ 'S'  : 'SL',
+    \ '' : 'SB',
+    \ }
+ "" turn on powerline symbols if they exist
+if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+endif
+
+
+""  functions
+""----------------------------------------------------------------------------------------
+
+""  remember cursor position
+"if has("autocmd")
+"    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+"endif
+if has("autocmd")
+    augroup resCur
+        autocmd!
+        autocmd BufReadPost * call setpos(".", getpos("'\""))
+    augroup End
+endif
+
+""  colour margin overlap
+highlight ColorColumn ctermbg=magenta
+ "" what to draw
+function! MarkMargin (on)
+    if exists('b:MarkMargin')
+        try
+            call matchdelete(b:MarkMargin)
+            catch /./
+        endtry
+        unlet b:MarkMargin
+    endif
+    if a:on
+        let b:MarkMargin = matchadd('ColorColumn', '\%90v', 100)
+    endif
+endfunction
+ "" when to draw
+augroup MarkMargin
+    autocmd!
+    autocmd BufEnter        *       :call MarkMargin(1)
+    autocmd BufEnter        *       :call MarkMargin(0)
+augroup End
+
+
+""  tty only options
+if &term=~"linux"
+    set laststatus=0
+    colorscheme miro8
+    hi ColorColumn      ctermbg=234
+    hi CursorLine       ctermbg=234     cterm=none
+    hi CursorLineNr     ctermfg=255
+endif
+
+""  pager options
+if exists("vimpager")
+    set nonumber
+    set nocursorline
+endif
+
+""  fold text
+
+

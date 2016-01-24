@@ -1,0 +1,21 @@
+##-- autostart programs
+##----------------------------------------------------------------------------------------
+
+##  start the urxvt daemon
+exec --no-startup-id /usr/bin/urxvtd -q -o -f
+
+##  start ftjerm dropdown terminal
+exec --no-startup-id /usr/bin/ftjerm
+
+##  mute system when i3 starts
+exec --no-startup-id /usr/bin/env sh $volume mute
+
+##  start the compositor, works good enough
+exec --no-startup-id /usr/bin/compton -b --config $HOME/.etc/compton.conf
+
+##  set wallpaper to previous session
+exec --no-startup-id /usr/bin/env sh $HOME/.fehbg
+
+##  automagically change wallpaper every 30 minutes
+#exec --no-startup-id /usr/bin/env sh $HOME/.etc/dotfiles/bin/wallpaper_auto
+

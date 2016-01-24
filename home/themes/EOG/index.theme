@@ -1,0 +1,10 @@
+[X-GNOME-Metatheme]
+Name=The-Eye-of-Gnome-Blue-GTK
+Type=X-GNOME-Metatheme
+Comment=There is only one
+Encoding=UTF-8
+GtkTheme=The-Eye-of-Gnome-Blue-GTK-GTK
+MetacityTheme=The-Eye-of-Gnome-GTK-Blue-GTK
+IconTheme=gnome
+CursorTheme=DMZ-White
+CursorSize=24

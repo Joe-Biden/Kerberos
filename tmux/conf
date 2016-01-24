@@ -1,0 +1,139 @@
+##----------------------------------------------------------------------------------------
+##-- Author   Joe Biden aka ygr                                                        --
+##-- Dotfile  ${HOME}/.tmux/conf                                                       --
+##-- vim: set nu ai et ts=4 sw=4 ft=conf syn=conf :                                     --
+##----------------------------------------------------------------------------------------
+
+## general configurations
+##----------------------------------------------------------------------------------------
+
+# use unicode settings
+set -g utf8
+set-window-option -g utf8 on
+
+# set correct terminal settings
+set -g default-terminal "screen-256color"
+set -g default-command /usr/bin/zsh
+set -g default-shell /usr/bin/zsh
+
+# set history limit
+set -g history-limit 100000
+
+# change prefix hotkey to match screen
+unbind-key C-b
+set-option -g prefix C-a
+
+# shorten command delay
+set-option -sg escape-time 0
+
+# start window indexing at one
+set-option -g base-index 1
+setw -g pane-base-index 1
+set -g renumber-windows on
+
+# reload the config file
+bind-key r source-file ~/.tmux/tmux.conf \; display-message "  Config reloaded, guy...   "
+
+# edit the config file internally
+bind-key e new-window -n 'Edit Tmux' '${EDITOR:-vim} ~/.tmux/tmux.conf && tmux source ~/.tmux/tmux.conf && tmux display "  tmux.conf has been sourced, buddy...   "'
+
+# fix window pane splitting
+unbind-key %
+unbind-key '"'
+bind-key 'v' split-window -h
+bind-key 'h' split-window -v
+
+# navigate panes with arrow keys
+bind-key Left select-pane -L
+bind-key Down select-pane -D
+bind-key Up select-pane -U
+bind-key Right select-pane -R
+
+# fix the $&%!ing mouse
+set -g mode-mouse off
+set -g mouse-select-window off
+set -g mouse-select-pane off
+set -g mouse-resize-pane off
+
+# fix window navigation keys
+unbind-key n
+unbind-key p
+bind-key '.' next-window
+bind-key ',' previous-window
+
+# set some functions to behave like vim
+unbind-key [
+setw -g mode-keys vi
+bind-key Escape copy-mode
+bind-key p paste-buffer
+bind-key -t vi-copy 'v' begin-selection
+bind-key -t vi-copy 'y' copy-selection
+
+# confirm before killing a window or server
+bind-key k confirm kill-window
+bind-key K confirm kill-server
+
+# enable window manager window titles with auto renaming
+set -g set-titles on
+setw -g automatic-rename on
+set -g set-titles-string "tmux:#I [ #W ]"
+
+# set border colors
+set -g pane-border-fg blue
+set -g pane-border-bg default
+set -g pane-active-border-fg blue
+set -g pane-active-border-bg default
+
+## statusbar settings
+##----------------------------------------------------------------------------------------
+
+# statusbar options
+set-option -g status on
+set -g status-utf8 on
+set -g status-keys vi
+bind-key -t vi-edit Up history-up
+bind-key -t vi-edit Down history-down
+set -g status-interval 1
+set -g status-justify centre
+
+# toggle statusbar
+bind-key b set-option status
+
+# status bar formatting
+set-option -g status-justify centre
+set-option -g status-left-length 50
+set-option -g status-right-length 50
+set-option -g status-left " #[fg=black]• #[fg=magenta]#S #[fg=black]• #[fg=yellow]#I #[fg=black]• #[fg=cyan]#P #[fg=black]•#[default]"
+set-option -g status-right "#[fg=black]• #[fg=blue]Bat: #[fg=white]#(cat /sys/class/power_supply/BAT0/capacity)% #[fg=black]• #[fg=blue]Cpu: #[fg=white]#(awk \'{print $1/1000}\' /sys/class/thermal/thermal_zone0/temp)°C #[fg=black]• #[fg=white]%H:%M #[fg=black]•#[default] "
+set -g window-status-current-format " #[bg=#04b4ae]#[fg=#121212]#I:#W#F "
+set -g window-status-format " #[bg=#df0101]#[fg=#ededed]#I:#W#F "
+
+# status colours
+set -g status-fg white
+set -g status-bg "#181818"
+set -g status-attr bright
+
+# status window colours
+set-window-option -g window-status-fg white
+set-window-option -g window-status-bg default
+set-window-option -g window-status-attr bright
+
+# active status window xolours
+set-window-option -g window-status-fg white
+set-window-option -g window-status-bg default
+set-window-option -g window-status-attr dim
+
+# urgent status window colours
+set -g window-status-bell-bg default
+set -g window-status-bell-fg red
+set -g window-status-bell-attr bright
+
+# command line and message line colours
+set -g message-fg white
+set -g message-bg black
+set -g message-attr bright
+
+## load status config
+if '[ -z $DISPLAY ]' 'source-file ${HOME}/.tmux/xless'
+if '[ -n $DISPLAY ]' 'source-file ${HOME}/.tmux/inx'
+

@@ -1,0 +1,18 @@
+##  program options
+set $FJ      /usr/bin/firejail
+set $CB      /usr/bin/st -t 'Web Browse' -e w3m 'www.duckduckgo.com'
+set $GC      /opt/google/chrome/google-chrome --password-store=basic --cipher-suite-blacklist=0x0033,0x0039,0x009E,0xcc15,0x0001,0x0002,0x0004,0x0005,0x0017,0x0018,0xc002,0xc007,0xc00c,0xc011,0xc016,0xff80,0xff81,0xff82,0xff83 --flag-switches-begin --enable-tab-audio-muting --disable-device-discovery-notifications --flag-switches-end
+set $IC      /opt/google/chrome/google-chrome --incognito --password-store=basic --cipher-suite-blacklist=0x0033,0x0039,0x009E,0xcc15,0x0001,0x0002,0x0004,0x0005,0x0017,0x0018,0xc002,0xc007,0xc00c,0xc011,0xc016,0xff80,0xff81,0xff82,0xff83 --flag-switches-begin --enable-tab-audio-muting --disable-device-discovery-notifications --flag-switches-end
+set $Netflix /opt/google/chrome/google-chrome --password-store=basic --cipher-suite-blacklist=0x0033,0x0039,0x009E,0xcc15,0x0001,0x0002,0x0004,0x0005,0x0017,0x0018,0xc002,0xc007,0xc00c,0xc011,0xc016,0xff80,0xff81,0xff82,0xff83 --flag-switches-begin --enable-tab-audio-muting --disable-device-discovery-notifications --flag-switches-end --app=https://www.netflix.com/
+
+##  user scripts & binaries
+set $signal         "${HOME}/.config/etc/dotfiles/bin/signal"
+set $volume         "${HOME}/.config/etc/dotfiles/bin/volume"
+set $backlight      "${HOME}/.config/etc/dotfiles/bin/backlight"
+set $wifi           "${HOME}/.config/etc/dotfiles/bin/wifi"
+set $trackpad       "${HOME}/.config/etc/dotfiles/bin/trackpad"
+set $wallpaper      "${HOME}/.config/etc/dotfiles/bin/wallpaper"
+set $i3Exit         "${HOME}/.config/etc/dotfiles/bin/i3exit"
+set $bartoggle      "${HOME}/.config/etc/dotfiles/bin/i3-bar-toggle"
+set $themeswitcher  "${HOME}/.config/etc/dotfiles/bin/gui-theme-switcher"
+

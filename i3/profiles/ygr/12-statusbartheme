@@ -1,0 +1,26 @@
+##  status bar theme - ygr
+# misc colours
+set $stl #26cece
+set $sep #aaaaaa
+set $bkd #000000
+# focused workspace
+set $FWo #000000
+set $FWb #000000
+set $FWt #2e9afe
+# active workspace
+set $AWo #000000
+set $AWb #000000
+set $AWt #696f89
+# inactive workspace
+set $IWo #000000
+set $IWb #000000
+set $IWt #696f89
+# urgent workspace
+set $UWo #000000
+set $UWb #000000
+set $UWt #bf3f34
+# binding mode
+set $BMo #d91c07
+set $BMb #d91c07
+set $BMt #cccccc
+
